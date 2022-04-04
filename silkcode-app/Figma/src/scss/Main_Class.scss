@@ -1,0 +1,686 @@
+/* This source code is exported from pxCode, you can get more document from https://www.pxcode.io */
+@import "utils";
+
+$font_type0: 700 48px/1.2 "Roboto", Helvetica, Arial, serif;
+$font_type1: 700 24px/1.2 "Roboto", Helvetica, Arial, serif;
+$font_type2: 600 36px/1.2 "Roboto", Helvetica, Arial, serif;
+$font_type3: 700 34px/1.2 "Roboto", Helvetica, Arial, serif;
+$font_type4: 600 24px/1.2 "Roboto", Helvetica, Arial, serif;
+$font_type5: 600 34px/1.2 "Roboto", Helvetica, Arial, serif;
+$font_type6: 24px/1.2 "Roboto", Helvetica, Arial, serif;
+
+.main--class- {
+  &block {
+    @include flex-column;
+    background-color: rgb(255, 255, 255);
+  }
+  &block.layout {
+    position: relative;
+    overflow: hidden;
+    min-height: 1024px;
+    flex-shrink: 0;
+  }
+  &content-box {
+    display: flex;
+    background-color: rgb(96, 20, 108);
+  }
+  &content-box.layout {
+    position: relative;
+    height: min-content;
+  }
+  &content-box-item {
+    @include flex-column;
+    position: relative;
+    flex: 0 1 114px;
+  }
+  &box2 {
+    background-color: rgb(11, 69, 77);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &box2.layout {
+    position: relative;
+    height: 58px;
+    margin: 16px 0px 15px 56px;
+  }
+  &content-box-spacer {
+    flex: 0 1 7px;
+  }
+  &hero-title {
+    @include font-face($font_type0, rgb(255, 255, 255), 0px);
+  }
+  &hero-title.layout {
+    position: relative;
+    flex: 0 0 auto;
+    height: min-content;
+    margin: 19px 0px 12px;
+  }
+  &content-box-spacer1 {
+    flex: 0 1 160px;
+  }
+  &medium-title {
+    @include v-center-content;
+    justify-content: center;
+    font: $font_type1;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    letter-spacing: 0px;
+  }
+  &medium-title.layout {
+    position: relative;
+    flex: 0 0 auto;
+    height: min-content;
+    margin: 32.5px 0px 27.5px;
+  }
+  &content-box-spacer2 {
+    flex: 0 1 93.5px;
+  }
+  &content-box-spacer3 {
+    flex: 0 1 102.5px;
+  }
+  &content-box-spacer4 {
+    flex: 0 1 113px;
+  }
+  &content-box-item1 {
+    @include flex-column;
+    position: relative;
+    flex: 0 1 270px;
+  }
+  &cover-block6 {
+    @include flex-column;
+    background-color: rgb(196, 196, 196);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &cover-block6.layout {
+    position: relative;
+    height: min-content;
+    margin: 26px 21px 26px 0px;
+  }
+  &medium-title1 {
+    @include v-center-content;
+    @include font-face($font_type1, rgb(255, 255, 255), 0px);
+  }
+  &medium-title1.layout {
+    position: relative;
+    height: min-content;
+    margin: 4px 24px 4px 26px;
+  }
+  &hero-title1-box {
+    @include h-center-content;
+  }
+  &hero-title1-box.layout {
+    position: relative;
+    height: min-content;
+    width: 89.44%;
+    margin: 30px auto 0px;
+  }
+  &hero-title1 {
+    overflow: visible;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin: 0px;
+    font: $font_type2;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    letter-spacing: 0px;
+    white-space: pre-wrap;
+  }
+  &flex {
+    display: flex;
+  }
+  &flex.layout {
+    position: relative;
+    height: min-content;
+    width: 89.17%;
+    margin: 36px auto 0px;
+  }
+  &flex-item {
+    @include flex-column;
+    position: relative;
+    flex: 0 1 620px;
+  }
+  &cover-block5 {
+    @include flex-column;
+    background-color: rgb(225, 176, 34);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &cover-block5.layout {
+    position: relative;
+    height: min-content;
+  }
+  &hero-title2 {
+    @include h-center-content;
+    font: $font_type3;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    letter-spacing: 0px;
+  }
+  &hero-title2.layout {
+    position: relative;
+    height: min-content;
+    width: 37.1%;
+    margin: 15px auto 19px;
+  }
+  &flex-spacer {
+    flex: 0 1 44px;
+  }
+  &cover-block4 {
+    @include flex-column;
+    background-color: rgb(132, 206, 38);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &cover-block4.layout {
+    position: relative;
+    height: min-content;
+  }
+  &hero-title2.layout1 {
+    position: relative;
+    height: min-content;
+    width: 34.68%;
+    margin: 16px auto 18px;
+  }
+  &flex1 {
+    display: flex;
+  }
+  &flex1.layout {
+    position: relative;
+    height: min-content;
+    width: 92.43%;
+    margin: 69px 3.4% 0px 4.17%;
+  }
+  &medium-title11 {
+    @include font-face($font_type4, rgb(255, 255, 255), 0px);
+  }
+  &medium-title11.layout {
+    position: relative;
+    flex: 0 0 auto;
+    height: min-content;
+    margin: 9px 0px 10px;
+  }
+  &flex1-spacer {
+    flex: 0 1 49px;
+  }
+  &flex1-item {
+    @include flex-column;
+    position: relative;
+    flex: 0 1 271px;
+  }
+  &cover-block {
+    @include flex-column;
+    background-color: rgb(96, 20, 108);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &cover-block.layout {
+    position: relative;
+    height: min-content;
+    margin: 1px 0px 0px;
+  }
+  &medium-title12 {
+    @include h-center-content;
+    font: $font_type4;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    letter-spacing: 0px;
+  }
+  &medium-title12.layout {
+    position: relative;
+    height: min-content;
+    width: 69%;
+    margin: 8px auto 10px;
+  }
+  &flex1-spacer1 {
+    flex: 0 1 33px;
+  }
+  &flex1-item1 {
+    @include flex-column;
+    position: relative;
+    flex: 0 1 270px;
+  }
+  &cover-block2 {
+    @include flex-column;
+    background-color: rgb(96, 20, 108);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &cover-block2.layout {
+    position: relative;
+    height: min-content;
+    margin: 0px 0px 1px;
+  }
+  &medium-title13 {
+    @include h-center-content;
+    font: $font_type4;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    letter-spacing: 0px;
+  }
+  &medium-title13.layout {
+    position: relative;
+    height: min-content;
+    margin: 8px 27.5px 10px 30.5px;
+  }
+  &flex1-spacer2 {
+    flex: 0 1 31px;
+  }
+  &cover-block.layout1 {
+    position: relative;
+    height: min-content;
+    margin: 0px 0px 1px;
+  }
+  &medium-title14 {
+    @include h-center-content;
+    font: $font_type4;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    letter-spacing: 0px;
+  }
+  &medium-title14.layout {
+    position: relative;
+    height: min-content;
+    width: 61.25%;
+    margin: 8px auto 10px;
+  }
+  &flex1-spacer3 {
+    flex: 0 1 33px;
+  }
+  &cover-block.layout2 {
+    position: relative;
+    height: min-content;
+    margin: 0px 0px 1px;
+  }
+  &medium-title15 {
+    @include h-center-content;
+    font: $font_type4;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    letter-spacing: 0px;
+  }
+  &medium-title15.layout {
+    position: relative;
+    height: min-content;
+    width: 28.04%;
+    margin: 8px auto 10px;
+  }
+  &flex2 {
+    display: flex;
+  }
+  &flex2.layout {
+    position: relative;
+    height: min-content;
+    width: 92.92%;
+    margin: 36px 3.19% 0px 3.89%;
+  }
+  &flex2-item {
+    @include flex-column;
+    position: relative;
+    flex: 0 1 424px;
+  }
+  &cover-group5 {
+    @include flex-column;
+  }
+  &cover-group5.layout {
+    position: relative;
+    height: min-content;
+    margin: 1px 0px 0px;
+  }
+  &flex3 {
+    @include flex-column;
+    background-color: rgb(91, 39, 109);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &flex3.layout {
+    position: relative;
+    height: min-content;
+  }
+  &flex4 {
+    display: flex;
+  }
+  &flex4.layout {
+    position: relative;
+    height: min-content;
+    margin: 23px 22px 0px;
+  }
+  &flex4-item {
+    @include flex-column;
+    position: relative;
+    flex: 0 1 84px;
+  }
+  &box9 {
+    background-color: rgb(245, 142, 254);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &box9.layout {
+    position: relative;
+    height: 86px;
+  }
+  &flex4-spacer {
+    flex: 0 1 16px;
+  }
+  &flex4-item1 {
+    @include flex-column;
+    position: relative;
+    flex: 1 1 274px;
+  }
+  &hero-title3-box.layout {
+    position: relative;
+    height: min-content;
+    margin: 0px 0px 4px;
+  }
+  &hero-title3 {
+    overflow: visible;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin: 0px;
+    @include font-face($font_type5, rgb(255, 255, 255), 0px);
+    white-space: pre-wrap;
+  }
+  &medium-title2-box.layout {
+    position: relative;
+    height: min-content;
+    width: 64.39%;
+    margin: 12px 30.42% 7px 5.19%;
+  }
+  &medium-title2 {
+    overflow: visible;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin: 0px;
+    @include font-face($font_type6, rgb(255, 255, 255), 0px);
+    white-space: pre-wrap;
+  }
+  &flex4-spacer1 {
+    flex: 0 1 33px;
+  }
+  &flex4-item2 {
+    @include flex-column;
+    position: relative;
+    flex: 0 1 424px;
+  }
+  &cover-group4 {
+    @include flex-column;
+    background-color: rgb(91, 39, 109);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &cover-group4.layout {
+    position: relative;
+    height: min-content;
+    margin: 0px 0px 1px;
+  }
+  &flex5 {
+    @include flex-column;
+    background-color: rgb(91, 39, 109);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &flex5.layout {
+    position: relative;
+    height: min-content;
+  }
+  &flex6 {
+    display: flex;
+  }
+  &flex6.layout {
+    position: relative;
+    height: min-content;
+    margin: 23px 22px 0px;
+  }
+  &flex6-item {
+    @include flex-column;
+    position: relative;
+    flex: 0 1 84px;
+  }
+  &box10 {
+    background-color: rgb(142, 254, 187);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &box10.layout {
+    position: relative;
+    height: 86px;
+  }
+  &flex6-spacer {
+    flex: 0 1 16px;
+  }
+  &flex6-item1 {
+    @include flex-column;
+    position: relative;
+    flex: 1 1 274px;
+  }
+  &hero-title31-box.layout {
+    position: relative;
+    height: min-content;
+    margin: 0px 0px 4px;
+  }
+  &medium-title21-box.layout {
+    position: relative;
+    height: min-content;
+    width: 64.39%;
+    margin: 12px 30.42% 7px 5.19%;
+  }
+  &flex6-spacer1 {
+    flex: 0 1 33px;
+  }
+  &flex6-item2 {
+    @include flex-column;
+    position: relative;
+    flex: 0 1 424px;
+  }
+  &cover-group3 {
+    @include flex-column;
+    background-color: rgb(91, 39, 109);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &cover-group3.layout {
+    position: relative;
+    height: min-content;
+    margin: 1px 0px 0px;
+  }
+  &flex7 {
+    @include flex-column;
+    background-color: rgb(91, 39, 109);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &flex7.layout {
+    position: relative;
+    height: min-content;
+  }
+  &flex8 {
+    display: flex;
+  }
+  &flex8.layout {
+    position: relative;
+    height: min-content;
+    margin: 23px 22px 0px;
+  }
+  &flex8-item {
+    @include flex-column;
+    position: relative;
+    flex: 0 1 84px;
+  }
+  &box11 {
+    background-color: rgb(254, 142, 142);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &box11.layout {
+    position: relative;
+    height: 86px;
+  }
+  &flex8-spacer {
+    flex: 0 1 16px;
+  }
+  &flex8-item1 {
+    @include flex-column;
+    position: relative;
+    flex: 1 1 274px;
+  }
+  &flex9 {
+    display: flex;
+  }
+  &flex9.layout {
+    position: relative;
+    height: min-content;
+    width: 92.92%;
+    margin: 33px 3.19% 31px 3.89%;
+  }
+  &flex9-item {
+    @include flex-column;
+    position: relative;
+    flex: 0 1 424px;
+  }
+  &cover-group2 {
+    @include flex-column;
+    background-color: rgb(91, 39, 109);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &cover-group2.layout {
+    position: relative;
+    height: min-content;
+    margin: 1px 0px 0px;
+  }
+  &flex10 {
+    @include flex-column;
+    background-color: rgb(91, 39, 109);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &flex10.layout {
+    position: relative;
+    height: min-content;
+  }
+  &flex11 {
+    display: flex;
+  }
+  &flex11.layout {
+    position: relative;
+    height: min-content;
+    margin: 23px 22px 0px;
+  }
+  &flex11-item {
+    @include flex-column;
+    position: relative;
+    flex: 0 1 84px;
+  }
+  &box12 {
+    background-color: rgb(245, 254, 142);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &box12.layout {
+    position: relative;
+    height: 86px;
+  }
+  &flex11-spacer {
+    flex: 0 1 16px;
+  }
+  &flex11-item1 {
+    @include flex-column;
+    position: relative;
+    flex: 1 1 274px;
+  }
+  &flex11-spacer1 {
+    flex: 0 1 33px;
+  }
+  &flex11-item2 {
+    @include flex-column;
+    position: relative;
+    flex: 0 1 424px;
+  }
+  &cover-group1 {
+    @include flex-column;
+    background-color: rgb(91, 39, 109);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &cover-group1.layout {
+    position: relative;
+    height: min-content;
+    margin: 0px 0px 1px;
+  }
+  &flex12 {
+    @include flex-column;
+    background-color: rgb(91, 39, 109);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &flex12.layout {
+    position: relative;
+    height: min-content;
+  }
+  &flex13 {
+    display: flex;
+  }
+  &flex13.layout {
+    position: relative;
+    height: min-content;
+    margin: 23px 22px 0px;
+  }
+  &flex13-item {
+    @include flex-column;
+    position: relative;
+    flex: 0 1 84px;
+  }
+  &box13 {
+    background-color: rgb(142, 247, 254);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &box13.layout {
+    position: relative;
+    height: 86px;
+  }
+  &flex13-spacer {
+    flex: 0 1 16px;
+  }
+  &flex13-item1 {
+    @include flex-column;
+    position: relative;
+    flex: 1 1 274px;
+  }
+  &flex13-spacer1 {
+    flex: 0 1 33px;
+  }
+  &flex13-item2 {
+    @include flex-column;
+    position: relative;
+    flex: 0 1 424px;
+  }
+  &cover-group {
+    @include flex-column;
+    background-color: rgb(91, 39, 109);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &cover-group.layout {
+    position: relative;
+    height: min-content;
+    margin: 1px 0px 0px;
+  }
+  &flex14 {
+    @include flex-column;
+    background-color: rgb(91, 39, 109);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &flex14.layout {
+    position: relative;
+    height: min-content;
+  }
+  &flex15 {
+    display: flex;
+  }
+  &flex15.layout {
+    position: relative;
+    height: min-content;
+    margin: 23px 22px 0px;
+  }
+  &flex15-item {
+    @include flex-column;
+    position: relative;
+    flex: 0 1 84px;
+  }
+  &box14 {
+    background-color: rgb(205, 142, 254);
+    border-radius: 10px 10px 10px 10px;
+  }
+  &box14.layout {
+    position: relative;
+    height: 86px;
+  }
+  &flex15-spacer {
+    flex: 0 1 16px;
+  }
+  &flex15-item1 {
+    @include flex-column;
+    position: relative;
+    flex: 1 1 274px;
+  }
+}
