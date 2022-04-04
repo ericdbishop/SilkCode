@@ -11,6 +11,4 @@
     "dependencies": {
     "express": "^4.17.1"
     }
-    Start script for Node.js server
-    Dependency on express module
     }
