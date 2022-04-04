@@ -11,12 +11,13 @@ contract SilkCode {
 
     struct helpRequest {
         uint reward;
-        address helper;
+        address payable helper;
     }
 
+    //uint numUsers = 0;
     address publisher;
-    mapping(address => User) users;
-    //helpRequest[] requests;
+    mapping(address => User) addressToUser;
+    //address[] users;
 
 
        //modifiers
@@ -26,18 +27,20 @@ contract SilkCode {
       _;
      }
 
-    //modifier isHelper(address creator) {
-        //require(msg.sender == userToRequests[creator].);
-        //_;
-     //}
-
     modifier isNotUser() {
-        require(users[msg.sender].nextId > 0);
+        require(addressToUser[msg.sender].nextId > 0);
         _;
      }
+
     modifier isValidId(uint ID) {
         // require the reward of the help request mapped to ID is not null
-        require(users[msg.sender].IdToRequest[ID].reward > 0);
+        require(addressToUser[msg.sender].IdToRequest[ID].reward > 0);
+        _;
+     }
+
+    modifier helperDoesNotExist(address creator, uint ID) 
+     {
+        require(addressToUser[creator].IdToRequest[ID].helper == address(0));
         _;
      }
 
@@ -50,46 +53,53 @@ contract SilkCode {
 
     }
 
-    function createUser() public isNotUser {
-        User storage newUser;
-
+    function createUser() public {
+        User storage newUser = addressToUser[msg.sender];
         newUser.nextId = 1;
         newUser.reputation = 100;
 
+        //users[numUsers++] = msg.sender;
     }
 
     // When creating a help request, send the payout you will be rewarding to
     // the smart contract to be stored.
-    function makeRequest(uint reward) public payable {
+    function makeRequest() public payable returns (uint id){
 
-        helpRequest storage newRequest = new helpRequest;
-        newRequest.reward = msg.value;
+        id = addressToUser[msg.sender].nextId;
+        
+        addressToUser[msg.sender].IdToRequest[id].reward = msg.value;
+        addressToUser[msg.sender].nextId += 1;
 
-        users[msg.sender].IdToRequest[users[msg.sender].nextId] = newRequest;
-        users[msg.sender].nextId += 1;
-
+        return id;
     }
 
     // When a request has been fulfilled, pay out the reward.
-    function payRequest(uint requestID) public isValidId(requestID) {
+    function payRequest(uint requestID, uint rating) public isValidId(requestID) payable returns (uint) {
+        address payable helper = addressToUser[msg.sender].IdToRequest[requestID].helper;
+        uint reward = addressToUser[msg.sender].IdToRequest[requestID].reward;
 
+        helper.transfer(reward);
 
+        addressToUser[helper].reputation = (addressToUser[helper].reputation/10) + rating;
+        if (addressToUser[helper].reputation > 100) {
+            addressToUser[helper].reputation = 100;
+        }
+
+        delete(addressToUser[msg.sender].IdToRequest[requestID]);
+
+        return requestID;
     }
 
-    function acceptRequest(uint requestID) public isValidId(requestID) {
+    function withdrawRequest(uint requestID) public isValidId(requestID) payable {
+        uint reward = addressToUser[msg.sender].IdToRequest[requestID].reward;
+        address payable self = payable(msg.sender);
 
-
+        self.transfer(reward);
     }
 
-    //function reqWinner() public view returns (uint winningProposal) {
+    // Called by helper when they begin a help request.
+    function acceptRequest(address creator, uint requestID) public helperDoesNotExist(creator, requestID) {
+        addressToUser[creator].IdToRequest[requestID].helper = payable(msg.sender);
+    }
 
-        //uint winningVoteCount = 0;
-        //for (uint prop = 0; prop < proposals.length; prop++)
-            //if (proposals[prop].voteCount > winningVoteCount) {
-                //winningVoteCount = proposals[prop].voteCount;
-                //winningProposal = prop;
-            //}
-       //assert(winningVoteCount>=3);
-
-    //}
 }
