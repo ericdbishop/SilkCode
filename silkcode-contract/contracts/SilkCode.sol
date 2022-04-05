@@ -1,4 +1,4 @@
-pragma solidity >=0.4.22;
+pragma solidity >=0.5.16;
 contract SilkCode {
     // Used ballot.sol lecture code as basis for SilkCode.sol
 
@@ -74,7 +74,7 @@ contract SilkCode {
     }
 
     // When a request has been fulfilled, pay out the reward.
-    function payRequest(uint requestID, uint rating) public isValidId(requestID) payable returns (uint) {
+    function payContract(uint requestID, uint rating) public isValidId(requestID) payable returns (uint) {
         address payable helper = addressToUser[msg.sender].IdToRequest[requestID].helper;
         uint reward = addressToUser[msg.sender].IdToRequest[requestID].reward;
 

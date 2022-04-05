@@ -2,7 +2,7 @@
 App = {
     web3: null,
     contracts: {},
-    address:'',
+    address:'', // Add contract address here
     network_id:3, // 5777 for local
     handler:null,
     value:1000000000000000000,
@@ -21,16 +21,16 @@ App = {
       }
       ethereum.enable();  
 
-      $.getJSON('flagIndex.json',(id)=>{     
-        $.getJSON('flags.json',(d)=>{
-          var index = id;
-          for(var i in d[index]){
-            $('#flagpic').html("<img src='http://www.geognos.com/api/en/countries/flag/"+i.toUpperCase()+".png'/>");
-            $('#country-name').html(d[index][i]) 
-          }
-          
-        })
-      })
+      //$.getJSON('flagIndex.json',(id)=>{     
+      //  $.getJSON('flags.json',(d)=>{
+      //    var index = id;
+      //    for(var i in d[index]){
+      //      $('#flagpic').html("<img src='http://www.geognos.com/api/en/countries/flag/"+i.toUpperCase()+".png'/>");
+      //      $('#country-name').html(d[index][i]) 
+      //    }
+      //    
+      //  })
+      //})
          
       return App.initContract();  
     },
@@ -51,8 +51,21 @@ App = {
     },  
   
     bindEvents: function() {  
+      $(document).on('click', '#createUser', function(){
+         App.handleUser(jQuery('#createUser').val());
+      });
+      /* Not all of the following functions will neccesarily take an argument */
       $(document).on('click', '#makeHelpRequest', function(){
-         App.handleHelpRequest(jQuery('#Initialize').val());
+         App.handleHelpRequest(jQuery('#makeRequest').val());
+      });
+      $(document).on('click', '#payHelpRequest', function(){
+         App.handlePay(jQuery('#pay').val());
+      });
+      $(document).on('click', '#withdrawHelpRequest', function(){
+         App.handleWithdraw(jQuery('#removeRequest').val());
+      });
+      $(document).on('click', '#acceptHelpRequest', function(){
+         App.handleAccept(jQuery('#acceptRequest').val());
       });
       App.populateAddress();
     },
@@ -61,81 +74,94 @@ App = {
       App.handler=App.web3.givenProvider.selectedAddress;
     },  
   
-    handleHelpRequest:function(){
+    handleUser : function(){
 
-      //if (counterValue===''){
-        //alert("Please enter a valid initializing value.")
-        //return false
-      //}
-      //var option={from:App.handler}    
-      //App.contracts.Counter.methods.initialize(counterValue)
-      //.send(option)
-      //.on('receipt',(receipt)=>{
-        //if(receipt.status){
-          //toastr.success("Counter is set to " + counterValue);
-      //}})
-      //.on('error',(err)=>{
-        //toastr.error("Only organizer can initialize the counter.");
-      //})
+    },
+
+    handleHelpRequest : function(){
+
+    },
+
+    handlePay : function(){
+
+    },
+
+    handleWithdraw : function(){
+
+    },
+
+    handleAccept : function(){
+
     },
 
   abi:[
     {
       "constant": false,
-      "inputs": [
-        {
-          "name": "x",
-          "type": "int256"
-        }
-      ],
-      "name": "initialize",
+      "inputs": [],
+      "name": "createUser",
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
-      "constant": true,
+      "constant": false,
       "inputs": [],
+      "name": "makeContract",
+      "outputs": [
+        {
+          "id": "int256"
+        }
+      ],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "requestId": "int256",
+          "rating": "int256"
+        }
+      ],
       "name": "payContract",
       "outputs": [
         {
-          "name": "",
-          "type": "int256"
+          "requestId": "int256"
         }
       ],
-      "payable": false,
-      "stateMutability": "view",
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "requestId": "int256",
+        }
+      ],
+      "name": "withdrawRequest",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "creator": "int256",
+          "requestId": "int256"
+        }
+      ],
+      "name": "acceptRequest",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
       "type": "function"
     }
-    //{
-      //"constant": false,
-      //"inputs": [
-        //{
-          //"name": "n",
-          //"type": "int256"
-        //}
-      //],
-      //"name": "increment",
-      //"outputs": [],
-      //"payable": false,
-      //"stateMutability": "nonpayable",
-      //"type": "function"
-    //},
-    //{
-      //"constant": false,
-      //"inputs": [
-        //{
-          //"name": "n",
-          //"type": "int256"
-        //}
-      //],
-      //"name": "decrement",
-      //"outputs": [],
-      //"payable": false,
-      //"stateMutability": "nonpayable",
-      //"type": "function"
-    //}
   ]
 
   }
