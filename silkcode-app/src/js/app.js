@@ -52,11 +52,11 @@ App = {
   
     bindEvents: function() {  
       $(document).on('click', '#createUser', function(){
-         App.handleUser(jQuery('#createUser').val());
+         App.handleUser();
       });
       /* Not all of the following functions will neccesarily take an argument */
       $(document).on('click', '#makeHelpRequest', function(){
-         App.handleHelpRequest(jQuery('#makeRequest').val());
+         App.handleHelpRequest();
       });
       $(document).on('click', '#payHelpRequest', function(){
          App.handlePay(jQuery('#pay').val());
@@ -75,22 +75,27 @@ App = {
     },  
   
     handleUser : function(){
+      App.contracts.SilkCode.methods.createUser();
 
     },
 
     handleHelpRequest : function(){
+      id = App.contracts.SilkCode.methods.makeRequest();
 
     },
 
-    handlePay : function(){
+    handlePay : function(requestId, rating){
+      id = App.contracts.SilkCode.methods.payContract(requestId, rating);
 
     },
 
-    handleWithdraw : function(){
+    handleWithdraw : function(requestId){
+      App.contracts.SilkCode.methods.withdrawRequest(requestId);
 
     },
 
-    handleAccept : function(){
+    handleAccept : function(creator, requestId){
+      App.contracts.SilkCode.methods.acceptRequest(creator, requestId);
 
     },
 
@@ -152,7 +157,7 @@ App = {
       "constant": false,
       "inputs": [
         {
-          "creator": "int256",
+          "creator": "address",
           "requestId": "int256"
         }
       ],
