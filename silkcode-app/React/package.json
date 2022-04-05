@@ -1,0 +1,58 @@
+{
+  "name": "px-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@lottiefiles/lottie-player": "^1.4.4",
+    "@rjsf/antd": "^3.2.1",
+    "@rjsf/core": "^3.2.1",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "antd": "^4.16.13",
+    "aos": "^2.3.4",
+    "aphrodite": "^2.4.0",
+    "classnames": "^2.3.1",
+    "cra-sass": "^0.0.5",
+    "normalize.css": "^8.0.1",
+    "react": "^17.0.2",
+    "react-bootstrap": "^2.0.2",
+    "react-device-detect": "^1.13.1",
+    "react-dom": "^17.0.2",
+    "react-headroom": "^3.2.0",
+    "react-router-dom": "^5.3.0",
+    "react-scripts": "^4.0.3",
+    "swiper": "^7.3.0",
+    "web-vitals": "^1.0.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@storybook/react": "^5.1.9",
+    "node-sass": "^6.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

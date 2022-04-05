@@ -4,11 +4,15 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-    "start": "node index.js"
+        "start": "node index.js"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
-    "express": "^4.17.1"
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "gulp": "^3.9.1",
+        "gulp-file-include": "^2.3.0"
     }
-    }
+}
