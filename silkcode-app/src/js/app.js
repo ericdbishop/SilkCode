@@ -38,7 +38,7 @@ App = {
       });
       /* Not all of the following functions will neccesarily take an argument */
       $(document).on('click', '#makeHelpRequest', function(){
-         App.handleHelpRequest();
+         App.handleHelpRequest(jQuery('#reward').val());
       });
       $(document).on('click', '#payHelpRequest', function(){
          App.handlePay(jQuery('#reqid').val(), jQuery('#rating').val());
@@ -63,8 +63,8 @@ App = {
 
     },
 
-    handleHelpRequest : function(){
-      id = App.contracts.SilkCode.methods.makeRequest();
+    handleHelpRequest : function(reward){
+      id = App.contracts.SilkCode.methods.makeRequest(reward);
 
     },
 
@@ -125,7 +125,13 @@ App = {
         "type": "function"
       },
       {
-        "inputs": [],
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "reward",
+            "type": "uint256"
+          }
+        ],
         "name": "makeRequest",
         "outputs": [
           {
