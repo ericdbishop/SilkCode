@@ -22,17 +22,6 @@ App = {
         App.web3 = new Web3(App.url);
       }
       ethereum.enable();  
-
-      //$.getJSON('flagIndex.json',(id)=>{     
-      //  $.getJSON('flags.json',(d)=>{
-      //    var index = id;
-      //    for(var i in d[index]){
-      //      $('#flagpic').html("<img src='http://www.geognos.com/api/en/countries/flag/"+i.toUpperCase()+".png'/>");
-      //      $('#country-name').html(d[index][i]) 
-      //    }
-      //    
-      //  })
-      //})
          
       return App.initContract();  
     },
@@ -40,15 +29,6 @@ App = {
     initContract: function() { 
       App.contracts.Counter = new App.web3.eth.Contract(App.abi,App.address, {});
 
-      //$.getJSON('flags.json',(d)=>{
-        //var index = Math.floor((Math.random() * 243) + 1);
-        
-        //for(var i in d[index]){
-          //$('#flag').addClass('flag-'+i)
-          //$('#country-name').html(d[index][i])
-        //}
-        
-      //})     
       return App.bindEvents();
     },  
   
@@ -61,13 +41,15 @@ App = {
          App.handleHelpRequest();
       });
       $(document).on('click', '#payHelpRequest', function(){
-         App.handlePay(jQuery('#pay').val());
+         App.handlePay(jQuery('#reqid').val(), jQuery('#rating').val());
       });
+      //handleWithdraw requires the id of the request to remove.
       $(document).on('click', '#withdrawHelpRequest', function(){
-         App.handleWithdraw(jQuery('#removeRequest').val());
+         App.handleWithdraw(jQuery('#reqid').val());
       });
+      //handleAccept requires the creator's address and the id of the request to accept.
       $(document).on('click', '#acceptHelpRequest', function(){
-         App.handleAccept(jQuery('#acceptRequest').val());
+         App.handleAccept(jQuery('#creator').val(), jQuery('#reqid').val());
       });
       App.populateAddress();
     },
@@ -199,25 +181,6 @@ App = {
   $(function() {
     $(window).load(function() {
       App.init();
-      toastr.options = {
-        // toastr.options = {
-          "closeButton": true,
-          "debug": false,
-          "newestOnTop": false,
-          "progressBar": false,
-          "positionClass": "toast-bottom-full-width",
-          "preventDuplicates": false,
-          "onclick": null,
-          "showDuration": "300",
-          "hideDuration": "1000",
-          "timeOut": "5000",
-          "extendedTimeOut": "1000",
-          "showEasing": "swing",
-          "hideEasing": "linear",
-          "showMethod": "fadeIn",
-          "hideMethod": "fadeOut"
-        // }
-      };
     });
   });
   
