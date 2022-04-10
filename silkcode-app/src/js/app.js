@@ -1,3 +1,5 @@
+// Used the counter-app app.js as an example to go off of as far as how to
+// structure app.js.
 
 App = {
     web3: null,
@@ -85,6 +87,14 @@ App = {
     },
 
     handlePay : function(requestId, rating){
+      // If requestId doesn't exist...
+
+      // If rating is not valid
+      if (rating > 100 || rating < 0){
+        alert("Please enter a valid rating.")
+        return false
+      }
+
       id = App.contracts.SilkCode.methods.payContract(requestId, rating);
 
     },
@@ -94,80 +104,95 @@ App = {
 
     },
 
+    // creator is the address of the creator who's request is being accepted,
+    // along with the requestId.
     handleAccept : function(creator, requestId){
       App.contracts.SilkCode.methods.acceptRequest(creator, requestId);
 
     },
 
-  abi:[
-    {
-      "constant": false,
-      "inputs": [],
-      "name": "createUser",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [],
-      "name": "makeContract",
-      "outputs": [
-        {
-          "id": "int256"
-        }
-      ],
-      "payable": true,
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "requestId": "int256",
-          "rating": "int256"
-        }
-      ],
-      "name": "payContract",
-      "outputs": [
-        {
-          "requestId": "int256"
-        }
-      ],
-      "payable": true,
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "requestId": "int256",
-        }
-      ],
-      "name": "withdrawRequest",
-      "outputs": [],
-      "payable": true,
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "creator": "address",
-          "requestId": "int256"
-        }
-      ],
-      "name": "acceptRequest",
-      "outputs": [],
-      "payable": true,
-      "stateMutability": "payable",
-      "type": "function"
-    }
-  ]
+    abi:[
+      {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "creator",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "requestID",
+            "type": "uint256"
+          }
+        ],
+        "name": "acceptRequest",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "createUser",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "makeRequest",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "requestID",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "rating",
+            "type": "uint256"
+          }
+        ],
+        "name": "payContract",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "requestID",
+            "type": "uint256"
+          }
+        ],
+        "name": "withdrawRequest",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+      }
+    ]
 
   }
   
