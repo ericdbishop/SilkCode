@@ -1,18 +1,14 @@
 {
-    "name": "silkcode-app",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "start": "node index.js"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "express": "^4.17.1",
-        "gulp-cli": "^2.3.0"
-    },
-    "devDependencies": {
-        "gulp": "^4.0.2"
-    }
+  "name": "silkcode-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "description": ""
 }
