@@ -64,7 +64,8 @@ contract SilkCode {
 
     // When creating a help request, send the payout you will be rewarding to
     // the smart contract to be stored.
-    function makeRequest() public payable returns (uint id){
+    function makeRequest(uint reward) public payable returns (uint id){
+        require(reward >= msg.value);
 
         id = addressToUser[msg.sender].nextId;
         
