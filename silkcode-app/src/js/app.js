@@ -1,13 +1,16 @@
 // Used the counter-app app.js as an example to go off of as far as how to
 // structure app.js.
 
+//var Web3 = require('web3')
+
 App = {
     url: 'http://127.0.0.1:7545',
+    web3Provider: null,
     web3: null,
-    contracts: {},
+    contract: null,
     address:'0xD5cA5386EbeAd325b6d83944d9eD7AE331CCA929', // Add contract address here
     network_id:5777, // 5777 for local
-    handler:null,
+    //handler:null,
     value:1000000000000000000,
     index:0,
     margin:10,
@@ -19,17 +22,20 @@ App = {
   
     initWeb3: function() {         
       if (typeof web3 !== 'undefined') {
-        App.web3 = new Web3(Web3.givenProvider);
+        App.web3Provider = new Web3(Web3.currentProvider);
       } else {
-        App.web3 = new Web3(App.url);
+        App.web3Provider = new Web3(App.url);
       }
-      ethereum.enable();  
+
+      App.web3 = new Web3(App.web3Provider);
+      ethereum.enable();
          
       return App.initContract();  
     },
 
     initContract: function() { 
-      App.contracts.SilkCode = new App.web3.eth.Contract(App.abi,App.address, {});
+      App.contract = new App.web3.eth.Contract(App.abi,App.address, {});
+      //App.contract = App.web3.eth.contract(App.abi,App.address, {});
 
       return App.bindEvents();
     },  
@@ -53,12 +59,12 @@ App = {
       $(document).on('click', '#acceptHelpRequest', function(){
          App.handleAccept(jQuery('#creator').val(), jQuery('#reqid').val());
       });
-      App.populateAddress();
+      //App.populateAddress();
     },
 
-    populateAddress : function(){  
-      App.handler=App.web3.givenProvider.selectedAddress;
-    },  
+    //populateAddress : function(){  
+    //  App.handler=App.web3.currentProvider.selectedAddress;
+    //},  
   
     handleUser : function(){
       App.contracts.SilkCode.methods.createUser();
@@ -72,7 +78,7 @@ App = {
         return false;
       }
       // makeRequest returns the requestId for the user.
-      id = App.contracts.SilkCode.methods.makeRequest(intReward);
+      App.contract.methods.makeRequest(intReward);
 
     },
 
@@ -101,94 +107,94 @@ App = {
 
     },
 
-    abi:[
-      {
-        "inputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "creator",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "requestID",
-            "type": "uint256"
-          }
-        ],
-        "name": "acceptRequest",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "createUser",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "uint256",
-            "name": "reward",
-            "type": "uint256"
-          }
-        ],
-        "name": "makeRequest",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "payable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "uint256",
-            "name": "requestID",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "rating",
-            "type": "uint256"
-          }
-        ],
-        "name": "payContract",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "payable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "uint256",
-            "name": "requestID",
-            "type": "uint256"
-          }
-        ],
-        "name": "withdrawRequest",
-        "outputs": [],
-        "stateMutability": "payable",
-        "type": "function"
-      }
-    ]
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "createUser",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "reward",
+          "type": "uint256"
+        }
+      ],
+      "name": "makeRequest",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "requestID",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "rating",
+          "type": "uint256"
+        }
+      ],
+      "name": "payContract",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "requestID",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdrawRequest",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "creator",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "requestID",
+          "type": "uint256"
+        }
+      ],
+      "name": "acceptRequest",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ]
 
   }
   
