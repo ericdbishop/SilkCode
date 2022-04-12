@@ -5,7 +5,7 @@ App = {
     web3: null,
     contracts: {},
     address:'', // Add contract address here
-    network_id:3, // 5777 for local
+    network_id:5777, // 5777 for local
     handler:null,
     value:1000000000000000000,
     index:0,
@@ -64,7 +64,13 @@ App = {
     },
 
     handleHelpRequest : function(reward){
-      id = App.contracts.SilkCode.methods.makeRequest(reward);
+      intReward = parseInt(reward);
+      if (isNaN(intReward)){
+        alert("input is not a number");
+        return false;
+      }
+      // makeRequest returns the requestId for the user.
+      id = App.contracts.SilkCode.methods.makeRequest(intReward);
 
     },
 
@@ -73,8 +79,8 @@ App = {
 
       // If rating is not valid
       if (rating > 100 || rating < 0){
-        alert("Please enter a valid rating.")
-        return false
+        alert("Please enter a valid rating.");
+        return false;
       }
 
       id = App.contracts.SilkCode.methods.payContract(requestId, rating);

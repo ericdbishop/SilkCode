@@ -170,8 +170,8 @@
               <input type="text" placeholder="Enter the name of your project. What needs to be worked on?" id="text-3fb9" name="text" class="u-border-3 u-border-no-left u-border-no-right u-border-no-top u-border-white u-input u-input-rectangle">
             </div>
             <div class="u-form-group u-form-group-2">
-              <label for="email-319a" class="u-label u-label-2">Price for Project</label>
-              <input type="text" placeholder="Enter how much you are willing to pay in Wei/ETH" id="email-319a" name="Price_Project" class="u-border-3 u-border-no-left u-border-no-right u-border-no-top u-border-white u-input u-input-rectangle" required="required">
+              <label for="reward" class="u-label u-label-2">Price for Project</label>
+              <input type="text" placeholder="Enter how much you are willing to pay in Wei/ETH" id="reward" name="Price_Project" class="u-border-3 u-border-no-left u-border-no-right u-border-no-top u-border-white u-input u-input-rectangle" required="required">
             </div>
             <div class="u-form-group u-form-name u-form-partition-factor-2 u-form-group-3">
               <label for="name-319a" class="u-label u-label-3">Course Numbers, Coding Languages</label>
@@ -183,7 +183,7 @@
             </div>
             <div class="u-align-left u-form-group u-form-submit u-form-group-5">
               <a href="#" class="u-active-palette-2-light-2 u-border-none u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-2-light-2 u-radius-8 u-text-palette-2-base u-white u-btn-1">Submit</a>
-              <input type="submit" value="submit" class="u-form-control-hidden">
+              <input type="submit" value="submit" class="u-form-control-hidden" id="makeHelpRequest">
             </div>
             <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
             <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>
@@ -192,5 +192,11 @@
         </div>
       </div>
     </section>
+
+    <!-- files needed -->
+    <script src="js/dist/web3.min.js"></script>
+    <script src="js/dist/truffle-contract.js"></script>
+    <script src="js/app.js"></script>
+
   </body>
 </html>
