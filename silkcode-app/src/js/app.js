@@ -2,15 +2,17 @@
 // structure app.js.
 
 App = {
+    url: 'http://127.0.0.1:7545',
     web3: null,
     contracts: {},
-    address:'', // Add contract address here
+    address:'0xD5cA5386EbeAd325b6d83944d9eD7AE331CCA929', // Add contract address here
     network_id:5777, // 5777 for local
     handler:null,
     value:1000000000000000000,
     index:0,
     margin:10,
     left:15,
+
     init: function() {
       return App.initWeb3();
     },
@@ -27,7 +29,7 @@ App = {
     },
 
     initContract: function() { 
-      App.contracts.Counter = new App.web3.eth.Contract(App.abi,App.address, {});
+      App.contracts.SilkCode = new App.web3.eth.Contract(App.abi,App.address, {});
 
       return App.bindEvents();
     },  
