@@ -2,13 +2,13 @@
 // structure app.js.
 
 //var Web3 = require('web3')
-
+//var contract = require("@truffle/contract");
 App = {
     url: 'http://127.0.0.1:7545',
     web3Provider: null,
     web3: null,
-    contract: null,
-    address:'0xD5cA5386EbeAd325b6d83944d9eD7AE331CCA929', // Add contract address here
+    contracts: {},
+    address:'0x7B7Ba104330Bcd071A9dBeE19E8f7F38a5E9dbaa', // Add contract address here
     network_id:5777, // 5777 for local
     //handler:null,
     value:1000000000000000000,
@@ -34,8 +34,8 @@ App = {
     },
 
     initContract: function() { 
-      App.contract = new App.web3.eth.Contract(App.abi,App.address, {});
-      //App.contract = App.web3.eth.contract(App.abi,App.address, {});
+      // App.contract = new App.web3.eth.Contract(App.abi,App.address, {});
+      App.contracts.SilkCode = App.web3.eth.contract(App.abi,App.address, {});
 
       return App.bindEvents();
     },  
@@ -78,7 +78,8 @@ App = {
         return false;
       }
       // makeRequest returns the requestId for the user.
-      App.contract.methods.makeRequest(intReward);
+      App.contracts.SilkCode.methods.makeRequest(intReward).call();
+      //App.contract.methods.makeRequest(intReward);
 
     },
 
