@@ -1,16 +1,17 @@
 // Used the counter-app app.js as an example to go off of as far as how to
 // structure app.js.
 
-//var Web3 = require('web3')
+//var Web3 = require('web3');
 //var contract = require("@truffle/contract");
+
 App = {
     url: 'http://127.0.0.1:7545',
-    web3Provider: null,
+    //web3Provider: null,
     web3: null,
     contracts: {},
-    address:'0x7B7Ba104330Bcd071A9dBeE19E8f7F38a5E9dbaa', // Add contract address here
+    address:'0x82eB2e4bEDc8d296BC061f8835Bb707C00F56d80', // Add contract address here
     network_id:5777, // 5777 for local
-    //handler:null,
+    handler:null,
     value:1000000000000000000,
     index:0,
     margin:10,
@@ -21,26 +22,49 @@ App = {
     },
   
     initWeb3: function() {         
+      //if(typeof window !== 'undefined' && typeof window.ethereum !== 'undefined'){
+        ////getting Permission to access. This is for when the user has new MetaMask
+        //console.log("window");
+        //window.ethereum.enable();
+        //App.web3Provider = window.ethereum;
+        //console.log(App.web3Provider);
+        //App.web3 = new Web3(window.ethereum);
+      
+      //} else {
+        ///// Specify default instance if no web3 instance provided
+        //App.web3Provider = new Web3(App.url);
+        //App.web3 = new Web3(App.web3Provider);
+      //}
+      
       if (typeof web3 !== 'undefined') {
-        App.web3Provider = new Web3(Web3.currentProvider);
+        //App.web3Provider = new Web3(Web3.currentProvider);
+        App.web3 = new Web3(Web3.givenProvider);
+        //console.log(window.ethereum);
+        console.log("web3 is undefined");
       } else {
-        App.web3Provider = new Web3(App.url);
+        //App.web3Provider = new Web3(App.url);
+        App.web3 = new Web3(App.url);
+        console.log("web3 is defined");
       }
 
-      App.web3 = new Web3(App.web3Provider);
+      //App.web3 = new Web3(window.ethereum);
       ethereum.enable();
+      //ethereum.request({ method: 'eth_requestAccounts' }); 
          
       return App.initContract();  
     },
 
     initContract: function() { 
-      // App.contract = new App.web3.eth.Contract(App.abi,App.address, {});
-      App.contracts.SilkCode = App.web3.eth.contract(App.abi,App.address, {});
+      App.contracts.SilkCode = new App.web3.eth.Contract(App.abi,App.address, {});
+      //App.contracts.SilkCode = App.web3.eth.contract(App.abi,App.address, {});
 
       return App.bindEvents();
     },  
   
     bindEvents: function() {  
+      //$(document).on('click', '#eth', function(){
+      //   App.handleAccount();
+      //});
       $(document).on('click', '#createUser', function(){
          App.handleUser();
       });
@@ -59,16 +83,20 @@ App = {
       $(document).on('click', '#acceptHelpRequest', function(){
          App.handleAccept(jQuery('#creator').val(), jQuery('#reqid').val());
       });
-      //App.populateAddress();
+      App.populateAddress();
     },
 
-    //populateAddress : function(){  
-    //  App.handler=App.web3.currentProvider.selectedAddress;
-    //},  
-  
-    handleUser : function(){
-      App.contracts.SilkCode.methods.createUser();
+    populateAddress : function(){  
+      App.handler = App.web3.givenProvider.selectedAddress;
+      console.log(App.web3.givenProvider);
+      console.log(App.handler);
+    },  
+    handleAccount : function(){
+      ethereum.request({ method: 'eth_requestAccounts' }); 
+    },
 
+    handleUser : function(){
+      App.contracts.SilkCode.methods.createUser().send({from:App.handler});
     },
 
     handleHelpRequest : function(reward){
@@ -78,7 +106,12 @@ App = {
         return false;
       }
       // makeRequest returns the requestId for the user.
-      App.contracts.SilkCode.methods.makeRequest(intReward).call();
+      if (!App.contracts.SilkCode){
+        alert("contract is undefined");
+        return false;
+      }
+      console.log("makeRequest");
+      App.contracts.SilkCode.methods.makeRequest(intReward).send({from:App.handler, value: reward});
       //App.contract.methods.makeRequest(intReward);
 
     },
@@ -108,7 +141,7 @@ App = {
 
     },
 
-  "abi": [
+"abi": [
     {
       "inputs": [],
       "stateMutability": "nonpayable",

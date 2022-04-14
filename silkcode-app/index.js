@@ -1,4 +1,6 @@
 var express = require('./node_modules/express');
+//var Web3 = require('web3');
+//var contract = require("@truffle/contract");
 var app = express();
 app.use(express.static('src'));
 app.use(express.static('../silkcode-contract/build/contracts'));
