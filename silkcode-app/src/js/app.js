@@ -66,31 +66,35 @@ App = {
       //   App.handleAccount();
       //});
       $(document).on('click', '#createUser', function(){
+         App.populateAddress().then(r => App.handler = r[0]);
          App.handleUser();
       });
       /* Not all of the following functions will neccesarily take an argument */
       $(document).on('click', '#makeHelpRequest', function(){
+         App.populateAddress().then(r => App.handler = r[0]);
          App.handleHelpRequest(jQuery('#reward').val());
       });
       $(document).on('click', '#payHelpRequest', function(){
+         App.populateAddress().then(r => App.handler = r[0]);
          App.handlePay(jQuery('#reqid').val(), jQuery('#rating').val());
       });
       //handleWithdraw requires the id of the request to remove.
       $(document).on('click', '#withdrawHelpRequest', function(){
+         App.populateAddress().then(r => App.handler = r[0]);
          App.handleWithdraw(jQuery('#reqid').val());
       });
       //handleAccept requires the creator's address and the id of the request to accept.
       $(document).on('click', '#acceptHelpRequest', function(){
+         App.populateAddress().then(r => App.handler = r[0]);
          App.handleAccept(jQuery('#creator').val(), jQuery('#reqid').val());
       });
-      App.populateAddress();
     },
 
-    populateAddress : function(){  
-      App.handler = App.web3.givenProvider.selectedAddress;
-      console.log(App.web3.givenProvider);
-      console.log(App.handler);
+    populateAddress : async function(){
+      // App.handler=App.web3.givenProvider.selectedAddress;
+        return await ethereum.request({method : 'eth_requestAccounts'});
     },  
+
     handleAccount : function(){
       ethereum.request({ method: 'eth_requestAccounts' }); 
     },
