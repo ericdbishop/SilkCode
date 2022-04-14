@@ -95,9 +95,9 @@ App = {
         return await ethereum.request({method : 'eth_requestAccounts'});
     },  
 
-    handleAccount : function(){
-      ethereum.request({ method: 'eth_requestAccounts' }); 
-    },
+    //handleAccount : function(){
+      //ethereum.request({ method: 'eth_requestAccounts' }); 
+    //},
 
     handleUser : function(){
       App.contracts.SilkCode.methods.createUser().send({from:App.handler});

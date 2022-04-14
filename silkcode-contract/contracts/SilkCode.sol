@@ -55,9 +55,8 @@ contract SilkCode {
     }
 
     function createUser() public {
-        User storage newUser = addressToUser[msg.sender];
-        newUser.nextId = 1;
-        newUser.reputation = 100;
+        addressToUser[msg.sender].nextId = 1;
+        addressToUser[msg.sender].reputation = 100;
 
         //users[numUsers++] = msg.sender;
     }
