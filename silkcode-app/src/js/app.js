@@ -9,8 +9,8 @@ App = {
     //web3Provider: null,
     web3: null,
     contracts: {},
-    address:'0xF7b8f597d3c043A7B5a6d6ffdfD0Fa6dD3833c3C', // Add contract address here
-    network_id:5777, // 5777 for local
+    address:'0x4e29C6736413c98a912dD71992CAfDBC3643462f', // Add contract address here
+    network_id:3, // 5777 for local
     handler:null,
     value:1000000000000000000,
     index:0,
@@ -23,7 +23,7 @@ App = {
   
     initWeb3: function() {         
       //if(typeof window !== 'undefined' && typeof window.ethereum !== 'undefined'){
-        ////getting Permission to access. This is for when the user has new MetaMask
+        ////new MetaMask
         //console.log("window");
         //window.ethereum.enable();
         //App.web3Provider = window.ethereum;
@@ -70,6 +70,10 @@ App = {
       //   App.handleUser();
       //});
       /* Not all of the following functions will neccesarily take an argument */
+      $(document).on('click', '#add', function(){
+         App.populateAddress().then(r => App.handler = r[0]);
+         handleAdd();
+      });
       $(document).on('click', '#makeHelpRequest', function(){
          App.populateAddress().then(r => App.handler = r[0]);
          App.handleHelpRequest(jQuery('#reward').val());
@@ -102,20 +106,21 @@ App = {
     //handleUser : function(){
     //  App.contracts.SilkCode.methods.createUser().send({from:App.handler});
     //},
+  
 
     handleHelpRequest : function(reward){
-      //intReward = parseInt(reward);
-      //if (isNaN(intReward)){
-        //alert("input is not a number");
-        //return false;
-      //}
+      intReward = parseInt(reward);
+      if (isNaN(intReward)){
+        alert("input is not a number");
+        return false;
+      }
       // makeRequest returns the requestId for the user.
       if (!App.contracts.SilkCode){
         alert("contract is undefined");
         return false;
       }
       console.log("makeRequest");
-      App.contracts.SilkCode.methods.makeRequest().send({from:App.handler, value: reward});
+      App.contracts.SilkCode.methods.makeRequest().send({from:App.handler, value: intReward});
       //App.contract.methods.makeRequest(intReward);
 
     },
@@ -144,12 +149,8 @@ App = {
       App.contracts.SilkCode.methods.acceptRequest(creator, requestId);
 
     },
-    "abi": [
-      {
-        "inputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-      },
+
+    "abi":[
       {
         "inputs": [
           {
@@ -165,14 +166,15 @@ App = {
       },
       {
         "inputs": [],
+        "name": "addEth",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
         "name": "makeRequest",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
+        "outputs": [],
         "stateMutability": "payable",
         "type": "function"
       },
@@ -196,6 +198,11 @@ App = {
         "type": "function"
       },
       {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
         "inputs": [
           {
             "internalType": "uint256",
@@ -209,97 +216,20 @@ App = {
         "type": "function"
       }
     ]
-//"abi": [
-//    {
-//      "inputs": [],
-//      "stateMutability": "nonpayable",
-//      "type": "constructor"
-//    },
-//    {
-//      "inputs": [],
-//      "name": "createUser",
-//      "outputs": [],
-//      "stateMutability": "nonpayable",
-//      "type": "function"
-//    },
-//    {
-//      "inputs": [
-//        {
-//          "internalType": "uint256",
-//          "name": "reward",
-//          "type": "uint256"
-//        }
-//      ],
-//      "name": "makeRequest",
-//      "outputs": [
-//        {
-//          "internalType": "uint256",
-//          "name": "id",
-//          "type": "uint256"
-//        }
-//      ],
-//      "stateMutability": "payable",
-//      "type": "function"
-//    },
-//    {
-//      "inputs": [
-//        {
-//          "internalType": "uint256",
-//          "name": "requestID",
-//          "type": "uint256"
-//        },
-//        {
-//          "internalType": "uint256",
-//          "name": "rating",
-//          "type": "uint256"
-//        }
-//      ],
-//      "name": "payContract",
-//      "outputs": [
-//        {
-//          "internalType": "uint256",
-//          "name": "",
-//          "type": "uint256"
-//        }
-//      ],
-//      "stateMutability": "payable",
-//      "type": "function"
-//    },
-//    {
-//      "inputs": [
-//        {
-//          "internalType": "uint256",
-//          "name": "requestID",
-//          "type": "uint256"
-//        }
-//      ],
-//      "name": "withdrawRequest",
-//      "outputs": [],
-//      "stateMutability": "payable",
-//      "type": "function"
-//    },
-//    {
-//      "inputs": [
-//        {
-//          "internalType": "address",
-//          "name": "creator",
-//          "type": "address"
-//        },
-//        {
-//          "internalType": "uint256",
-//          "name": "requestID",
-//          "type": "uint256"
-//        }
-//      ],
-//      "name": "acceptRequest",
-//      "outputs": [],
-//      "stateMutability": "nonpayable",
-//      "type": "function"
-//    }
-//  ]
-
-  }
+ }
   
+  async function handleAdd() {
+    //const accounts = await web3.eth.getAccounts();
+    let response;
+    App.populateAddress().then(r => App.handler = r[0]);
+    console.log(App.handler);
+    response = await App.contracts.SilkCode.methods.addEth().send({  //would return a boolean value
+        from: App.handler,
+        value: 100000   //this is the amount entered in the front-end application
+    });
+  };
+
+
   $(function() {
     $(window).load(function() {
       App.init();

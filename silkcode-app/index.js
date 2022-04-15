@@ -1,5 +1,6 @@
 var express = require('./node_modules/express');
-//var Web3 = require('web3');
+var Web3 = require('web3');
+//var Eth = require('web3-eth');
 //var contract = require("@truffle/contract");
 var app = express();
 app.use(express.static('src'));

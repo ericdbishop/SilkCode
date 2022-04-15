@@ -8,8 +8,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "web3": "^1.7.3",
+    "web3-eth": "^1.7.3"
   },
-  "devDependencies": {},
   "description": ""
 }

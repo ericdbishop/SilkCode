@@ -1,4 +1,3 @@
-
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.5.16;
 contract SilkCode {
@@ -20,22 +19,30 @@ contract SilkCode {
     uint numUsers;
     address[] user;
 
+
+       //modifiers
+
+    modifier onlyPublisher()
+     {require(msg.sender == publisher);
+      _;
+     }
+
     //modifier isNotUser() {
-    //    require(addressToUser[msg.sender].nextId > 0);
-    //    _;
-    // }
+        //require(addressToUser[msg.sender].nextId > 0);
+        //_;
+     //}
 
-    //modifier isValidId(uint ID) {
-    //    // require the reward of the help request mapped to ID is not null
-    //    require(addressToUser[msg.sender].IdToRequest[ID].reward > 0);
-    //    _;
-    // }
+    modifier isValidId(uint ID) {
+        // require the reward of the help request mapped to ID is not null
+        require(IdToRequest[ID].reward > 0);
+        _;
+     }
 
-    //modifier helperDoesNotExist(address creator, uint ID) 
-    // {
-    //    require(addressToUser[creator].IdToRequest[ID].helper == address(0));
-    //    _;
-    // }
+    modifier helperDoesNotExist(address creator, uint ID) 
+     {
+        require(IdToRequest[ID].helper == IdToRequest[ID].creator);
+        _;
+     }
 
     constructor() {
         publisher = msg.sender;
@@ -43,21 +50,23 @@ contract SilkCode {
         ////proposals.length = numProposals; -- before 0.6.0
         //for (uint prop = 0; prop < numProposals; prop ++)
             //proposals.push(Proposal(0));
+
     }
 
     // When creating a help request, send the payout you will be rewarding to
     // the smart contract to be stored.
-    function makeRequest() public payable returns (uint){
+    function makeRequest() public payable {
         uint id = nextId;
-        
-        IdToRequest[id].reward = msg.value;
-        nextId += 1;
+        helpRequest memory newRequest;
 
-        return id;
+        newRequest = helpRequest(msg.value, id, msg.sender, payable(msg.sender));
+        
+        IdToRequest[id] = newRequest;
+        nextId += 1;
     }
 
     // When a request has been fulfilled, pay out the reward.
-    function payContract(uint requestID) public payable returns (uint) {
+    function payContract(uint requestID) public isValidId(requestID) payable returns (uint) {
         address payable helper = IdToRequest[requestID].helper;
         uint reward = IdToRequest[requestID].reward;
 
