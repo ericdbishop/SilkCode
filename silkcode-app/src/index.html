@@ -1,22 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100&display=swap" rel="stylesheet"> 	
+    <link rel="stylesheet" href="css/styles.css">
+    <title>SilkCode Homepage</title>
+    <meta name="author" content="Eric Bishop">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 <h1>SilkCode</h1>
 
-<button class="enableEthereumButton" id="eth">Enable Ethereum</button>
 
-<div class="container">
+<main>
+<button class="enableEthereumButton" id="eth">Connect with Metamask</button>
+
+<div>
     <button type="button" id="createUser">New User</button>
 </div>
 
-<div class="container">
-    <input type="reward" id="reward">
+<div>
+    Reward: <input type="reward" id="reward">
+    <br>
     <button type="button" id="makeHelpRequest">Create Help Request</button>
 </div>
+    
+<div>
+    <input type="id" id="requid">
+    <br>
+    <button type="button" id="withdrawHelpRequest">Withdraw Help Request</button>
+</div>
 
-<div class="container">
+<div>
+    Enter the ID of the request you would like to payout the reward for:
+    <input type="id" id="reqid">
+</div>
+
+<div>
+    Please enter a rating for the programmer who helped you from 1-10.
+    <br>
+    <input type="rating" id="Rating">
+    <br>
+    <button type="button" id="payHelpRequest">Payout Help Request Reward</button>
+</div>
+
+<div>
+    <input type="id" id="reqid">
+    <button type="button" id="acceptHelpRequest">Accept Help Request</button>
+</div>
+
+<div>
     <button type="button" id="add">Send ETH</button>
 </div>
+</main>
+
 <!-- files needed -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>

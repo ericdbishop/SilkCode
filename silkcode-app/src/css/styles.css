@@ -1,0 +1,36 @@
+html {
+	background-color:rgb(51, 48, 53);
+	font-family: 'JetBrains Mono', monospace;
+}
+
+h1 {	
+	color:#ffccff;
+	text-align:center;
+	padding: 3px;
+	margin: 20px auto;
+}
+
+main {
+	margin: auto;
+	padding: 20px;
+}
+
+div {
+    color:white;
+    padding: 10px;
+}
+
+button {
+    background-color: #632c6e; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  } 
+
+input {
+    margin:10px 5px;
+}

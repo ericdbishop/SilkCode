@@ -38,7 +38,7 @@ contract SilkCode {
         _;
      }
 
-    modifier helperDoesNotExist(address creator, uint ID) 
+    modifier helperDoesNotExist(uint ID) 
      {
         require(IdToRequest[ID].helper == IdToRequest[ID].creator);
         _;
@@ -46,6 +46,7 @@ contract SilkCode {
 
     constructor() {
         publisher = msg.sender;
+        nextId = 0;
         //voters[chairperson].weight = 2; // weight 2 for testing purposes
         ////proposals.length = numProposals; -- before 0.6.0
         //for (uint prop = 0; prop < numProposals; prop ++)
@@ -55,7 +56,7 @@ contract SilkCode {
 
     // When creating a help request, send the payout you will be rewarding to
     // the smart contract to be stored.
-    function makeRequest() public payable {
+    function makeRequest() public payable returns (uint) {
         uint id = nextId;
         helpRequest memory newRequest;
 
@@ -63,6 +64,7 @@ contract SilkCode {
         
         IdToRequest[id] = newRequest;
         nextId += 1;
+        return id;
     }
 
     // When a request has been fulfilled, pay out the reward.
@@ -84,7 +86,7 @@ contract SilkCode {
     }
 
     // Called by helper when they begin a help request.
-    function acceptRequest(uint requestID) public {
+    function acceptRequest(uint requestID) public helperDoesNotExist(requestID) {
         IdToRequest[requestID].helper = payable(msg.sender);
     }
 
