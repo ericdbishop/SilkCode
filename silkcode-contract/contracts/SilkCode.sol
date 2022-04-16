@@ -15,11 +15,6 @@ contract SilkCode {
 
     address publisher;
 
-
-    uint numUsers;
-    address[] user;
-
-
        //modifiers
 
     modifier onlyPublisher()
@@ -27,10 +22,11 @@ contract SilkCode {
       _;
      }
 
-    //modifier isNotUser() {
-        //require(addressToUser[msg.sender].nextId > 0);
-        //_;
-     //}
+    modifier isCreator(uint ID) {
+        // require the reward of the help request mapped to ID is not null
+        require(IdToRequest[ID].creator == msg.sender);
+        _;
+     }
 
     modifier isValidId(uint ID) {
         // require the reward of the help request mapped to ID is not null
@@ -47,11 +43,6 @@ contract SilkCode {
     constructor() {
         publisher = msg.sender;
         nextId = 0;
-        //voters[chairperson].weight = 2; // weight 2 for testing purposes
-        ////proposals.length = numProposals; -- before 0.6.0
-        //for (uint prop = 0; prop < numProposals; prop ++)
-            //proposals.push(Proposal(0));
-
     }
 
     // When creating a help request, send the payout you will be rewarding to
@@ -68,25 +59,26 @@ contract SilkCode {
     }
 
     // When a request has been fulfilled, pay out the reward.
-    function payContract(uint requestID) public isValidId(requestID) payable returns (uint) {
+    function payContract(uint requestID) public isValidId(requestID) isCreator(requestID) payable {
         address payable helper = IdToRequest[requestID].helper;
         uint reward = IdToRequest[requestID].reward;
 
         delete(IdToRequest[requestID]);
 
         helper.transfer(reward);
-        return requestID;
     }
 
-    function withdrawRequest(uint requestID) public payable {
+    function withdrawRequest(uint requestID) public isCreator(requestID) payable {
         uint reward = IdToRequest[requestID].reward;
         address payable self = payable(msg.sender);
+
+        delete(IdToRequest[requestID]);
 
         self.transfer(reward);
     }
 
     // Called by helper when they begin a help request.
-    function acceptRequest(uint requestID) public helperDoesNotExist(requestID) {
+    function acceptRequest(uint requestID) public isValidId(requestID) helperDoesNotExist(requestID) {
         IdToRequest[requestID].helper = payable(msg.sender);
     }
 
