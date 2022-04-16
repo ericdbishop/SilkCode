@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.5.16;
 contract SilkCode {
-    // Used ballot.sol lecture code as basis for SilkCode.sol
 
     uint nextId;
 
@@ -40,10 +39,12 @@ contract SilkCode {
         _;
      }
 
-    constructor() {
+    constructor() payable {
         publisher = msg.sender;
         nextId = 0;
     }
+
+    function addEth() public payable {}
 
     // When creating a help request, send the payout you will be rewarding to
     // the smart contract to be stored.
@@ -63,18 +64,18 @@ contract SilkCode {
         address payable helper = IdToRequest[requestID].helper;
         uint reward = IdToRequest[requestID].reward;
 
-        delete(IdToRequest[requestID]);
+        IdToRequest[requestID].reward = 0;
 
         helper.transfer(reward);
     }
 
     function withdrawRequest(uint requestID) public isCreator(requestID) payable {
         uint reward = IdToRequest[requestID].reward;
-        address payable self = payable(msg.sender);
+        address payable creator = payable(msg.sender);
 
-        delete(IdToRequest[requestID]);
+        IdToRequest[requestID].reward = 0;
 
-        self.transfer(reward);
+        creator.call{value:reward, gas:5000};
     }
 
     // Called by helper when they begin a help request.

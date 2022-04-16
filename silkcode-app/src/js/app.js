@@ -9,7 +9,7 @@ App = {
     //web3Provider: null,
     web3: null,
     contracts: {},
-    address:'0x4e29C6736413c98a912dD71992CAfDBC3643462f', // Add contract address here
+    address:'0x82a9990059d8afc7d13558cde209671597d55284', // Add contract address here
     network_id:3, // 5777 for local
     handler:null,
     value:1000000000000000000,
@@ -62,9 +62,9 @@ App = {
     },  
   
     bindEvents: function() {  
-      //$(document).on('click', '#eth', function(){
-      //   App.handleAccount();
-      //});
+      $(document).on('click', '#eth', function(){
+         App.handleAccount();
+      });
       //$(document).on('click', '#createUser', function(){
       //   App.populateAddress().then(r => App.handler = r[0]);
       //   App.handleUser();
@@ -80,17 +80,17 @@ App = {
       });
       $(document).on('click', '#payHelpRequest', function(){
          App.populateAddress().then(r => App.handler = r[0]);
-         App.handlePay(jQuery('#reqid').val(), jQuery('#rating').val());
+         App.handlePay(jQuery('#PayReqid').val(), jQuery('#rating').val());
       });
       //handleWithdraw requires the id of the request to remove.
       $(document).on('click', '#withdrawHelpRequest', function(){
          App.populateAddress().then(r => App.handler = r[0]);
-         App.handleWithdraw(jQuery('#reqid').val());
+         App.handleWithdraw(jQuery('#WithdrawReqid').val());
       });
       //handleAccept requires the creator's address and the id of the request to accept.
       $(document).on('click', '#acceptHelpRequest', function(){
          App.populateAddress().then(r => App.handler = r[0]);
-         App.handleAccept(jQuery('#reqid').val());
+         App.handleAccept(jQuery('#AcceptReqid').val());
       });
     },
 
@@ -99,9 +99,9 @@ App = {
         return await ethereum.request({method : 'eth_requestAccounts'});
     },  
 
-    //handleAccount : function(){
-      //ethereum.request({ method: 'eth_requestAccounts' }); 
-    //},
+    handleAccount : function(){
+      ethereum.request({ method: 'eth_requestAccounts' }); 
+    },
 
     //handleUser : function(){
     //  App.contracts.SilkCode.methods.createUser().send({from:App.handler});
@@ -134,7 +134,7 @@ App = {
         return false;
       }
 
-      id = App.contracts.SilkCode.methods.payContract(requestId, rating);
+      id = App.contracts.SilkCode.methods.payContract(requestId);
 
     },
 
@@ -146,11 +146,16 @@ App = {
     // creator is the address of the creator who's request is being accepted,
     // along with the requestId.
     handleAccept : function(creator, requestId){
-      App.contracts.SilkCode.methods.acceptRequest(creator, requestId);
+      App.contracts.SilkCode.methods.acceptRequest(requestId);
 
     },
 
     "abi":[
+      {
+        "inputs": [],
+        "stateMutability": "payable",
+        "type": "constructor"
+      },
       {
         "inputs": [
           {
@@ -174,7 +179,13 @@ App = {
       {
         "inputs": [],
         "name": "makeRequest",
-        "outputs": [],
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
         "stateMutability": "payable",
         "type": "function"
       },
@@ -187,20 +198,9 @@ App = {
           }
         ],
         "name": "payContract",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
+        "outputs": [],
         "stateMutability": "payable",
         "type": "function"
-      },
-      {
-        "inputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
       },
       {
         "inputs": [
@@ -219,7 +219,7 @@ App = {
  }
   
   async function handleAdd() {
-    //const accounts = await web3.eth.getAccounts();
+    ////const accounts = await web3.eth.getAccounts();
     let response;
     App.populateAddress().then(r => App.handler = r[0]);
     console.log(App.handler);
