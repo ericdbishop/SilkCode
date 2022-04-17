@@ -9,13 +9,14 @@ App = {
   //web3Provider: null,
   web3: null,
   contracts: {},
-  address:'0x6a144821764c896a045b28909562d28923670937', // Add contract address here
+  address:'0xd33AB1A34247E8258bfe6cb28b1a0e14a3d1a52c', // Add contract address here
   network_id:3, // 5777 for local
   handler:null,
   value:1000000000000000000,
   index:0,
   margin:10,
   left:15,
+  id: 0,
 
   init: function() {
     return App.initWeb3();
@@ -77,7 +78,7 @@ App = {
     });
     $(document).on('click', '#makeHelpRequest', function(){
        App.populateAddress().then(r => App.handler = r[0]);
-       App.handleHelpRequest(jQuery('#reward').val());
+       App.handleHelpRequest(jQuery('#reward').val(), jQuery('#description').val());
     });
     $(document).on('click', '#payHelpRequest', function(){
        App.populateAddress().then(r => App.handler = r[0]);
@@ -111,7 +112,7 @@ App = {
   //},
 
 
-  handleHelpRequest : function(reward){
+  handleHelpRequest : function(reward, description){
     intReward = parseInt(reward);
     if (isNaN(intReward)){
       alert("input is not a number");
@@ -125,10 +126,18 @@ App = {
     //console.log("makeRequest");
     App.contracts.SilkCode.methods.makeRequest().send({from:App.handler, value: intReward})
     .then((x) => {
-      console.log(x)
+      console.log(x);
+      console.log(x.events.request.returnValues.id);
+      $.post('/request',
+        {
+          creator: x.events.request.returnValues.creator, 
+          value:intReward, 
+          requestDescription:description, 
+          reqId:x.events.request.returnValues.id
+        } 
+      );
     });
-    //App.contract.methods.makeRequest(intReward);
-
+    //App.contract.methods.makeRequest(intReward)
   },
 
   handlePay : function(requestId, rating){
@@ -166,9 +175,23 @@ App = {
 
   "abi":[
     {
-      "inputs": [],
-      "stateMutability": "payable",
-      "type": "constructor"
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "creator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "name": "request",
+      "type": "event"
     },
     {
       "inputs": [
@@ -193,13 +216,7 @@ App = {
     {
       "inputs": [],
       "name": "makeRequest",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
+      "outputs": [],
       "stateMutability": "payable",
       "type": "function"
     },
@@ -215,6 +232,11 @@ App = {
       "outputs": [],
       "stateMutability": "payable",
       "type": "function"
+    },
+    {
+      "inputs": [],
+      "stateMutability": "payable",
+      "type": "constructor"
     },
     {
       "inputs": [

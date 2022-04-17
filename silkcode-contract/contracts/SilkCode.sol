@@ -14,6 +14,7 @@ contract SilkCode {
 
     address publisher;
 
+    event request(address creator, uint id);
        //modifiers
 
     modifier onlyPublisher()
@@ -48,13 +49,13 @@ contract SilkCode {
 
     // When creating a help request, send the payout you will be rewarding to
     // the smart contract to be stored.
-    function makeRequest() public payable returns (uint) {
+    function makeRequest() public payable {
         uint id = nextId;
 
         IdToRequest[id] = helpRequest(msg.value, id, msg.sender, payable(msg.sender));
         
         nextId += 1;
-        return id;
+        emit request(msg.sender, id);
     }
 
     // When a request has been fulfilled, pay out the reward.
