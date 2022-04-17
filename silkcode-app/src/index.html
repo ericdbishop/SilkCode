@@ -11,42 +11,34 @@
 
 
 <main>
-<button class="enableEthereumButton" id="eth">Connect with Metamask</button>
-
-<div>
-    <button type="button" id="createUser">New User</button>
+<div> 
+    <h3>+ Start Here +</h3>
+<button class="enableEthereumButton" id="eth">1. Connect with Metamask</button>
+    <button type="button" id="createUser">2. SilkCode Signup</button>
 </div>
+<br>
 
 <div>
-    Reward: <input type="reward" id="reward">
-    <br>
+    <h3>+ Create/Manage a Help Request +</h3>
     <button type="button" id="makeHelpRequest">Create Help Request</button>
+    Reward (WEI): <input type="reward" id="reward">
 </div>
-    
 <div>
-    <input type="id" id="WithdrawReqid">
-    <br>
     <button type="button" id="withdrawHelpRequest">Withdraw Help Request</button>
+    Request ID: <input type="id" id="WithdrawReqid">
+</div>
+<div>
+    <button type="button" id="payHelpRequest">Payout Reward</button>
+    Request ID: <input type="id" id="PayReqid"><br>
+    Rate your code helper [1-10 Scale]: <input type="rating" id="Rating">
 </div>
 
 <div>
-    Enter the ID of the request you would like to payout the reward for:
-    <input type="id" id="PayReqid">
-</div>
-
-<div>
-    Please enter a rating for the programmer who helped you from 1-10.
-    <br>
-    <input type="rating" id="Rating">
-    <br>
-    <button type="button" id="payHelpRequest">Payout Help Request Reward</button>
-</div>
-
-<div>
-    <input type="id" id="AcceptReqid">
+    <h3>+ Accept Help Request work +</h3>
     <button type="button" id="acceptHelpRequest">Accept Help Request</button>
+    Request ID: <input type="id" id="AcceptReqid">
 </div>
-
+<br>
 <div>
     <button type="button" id="add">Send ETH</button>
 </div>
