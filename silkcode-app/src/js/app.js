@@ -224,13 +224,13 @@ App = {
 }
 
 async function reqAcc_Connect() { //Moved ETH_request accounts to print errors
-try {
-  response = ethereum.request({ method: 'eth_requestAccounts' });
-  console.log("Eth_ReqAcc: ", response);
-  return response
-} catch (e) {
-  console.log("Error: ", e)
-  return null
+  try {
+    response = ethereum.request({ method: 'eth_requestAccounts' });
+    console.log("Eth_ReqAcc: ", response);
+    return response
+  } catch (e) {
+    console.log("Error: ", e)
+    return null
 };
 
 };

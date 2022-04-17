@@ -9,39 +9,35 @@
 </head>
 <h1>SilkCode</h1>
 
-
 <main>
 <div> 
     <h3>+ Start Here +</h3>
-<button class="enableEthereumButton" id="eth">1. Connect with Metamask</button>
-    <button type="button" id="createUser">2. SilkCode Signup</button>
+<button class="enableEthereumButton" id="eth" onClick="alert('Connecting to MetaMask, Check Prompt');">1. Connect with Metamask</button>
+    <button type="button" id="createUser" onClick="alert('Created User');">2. SilkCode Signup</button>
 </div>
-<br>
-
+    <br>
 <div>
     <h3>+ Create/Manage a Help Request +</h3>
-    <button type="button" id="makeHelpRequest">Create Help Request</button>
+    <button type="button" id="makeHelpRequest" onClick="alert('Creating Help Request');">Create Help Request</button>
     Reward (WEI): <input type="reward" id="reward">
 </div>
 <div>
-    <button type="button" id="withdrawHelpRequest">Withdraw Help Request</button>
+    <button type="button" id="withdrawHelpRequest"  onClick="alert('Creating Withdraw of Help Request');">Withdraw Help Request</button>
     Request ID: <input type="id" id="WithdrawReqid">
 </div>
 <div>
-    <button type="button" id="payHelpRequest">Payout Reward</button>
+    <button type="button" id="payHelpRequest" onClick="alert('Paying out reward of Help Request');">Payout Reward</button>
     Request ID: <input type="id" id="PayReqid"><br>
     Rate your code helper [1-10 Scale]: <input type="rating" id="Rating">
 </div>
-
 <div>
     <h3>+ Accept Help Request work +</h3>
-    <button type="button" id="acceptHelpRequest">Accept Help Request</button>
+    <button type="button" id="acceptHelpRequest"  onClick="alert('Accepting to Help Request');">Accept Help Request</button>
     Request ID: <input type="id" id="AcceptReqid">
 </div>
-<br>
+    <br>
 <div>
-
-    <button type="button" id="add">Send ETH</button>
+    <button type="button" id="add" onClick="alert('Sending ETH');">Send ETH</button>
     Amount To Send: <input type="amount" id="addAmount">
 </div>
 </main>
@@ -49,6 +45,7 @@
 <!-- files needed -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+<script src="js/app.js"></script>
 
 <!--
 <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@0.20.6/dist/web3.min.js"></script>
@@ -57,6 +54,5 @@
 <script src="js/dist/web3.min.js"></script>
   <script src="js/dist/truffle-contract.js"></script>
 -->
-<script src="js/app.js"></script>
 
 </html>
