@@ -72,7 +72,7 @@ App = {
       /* Not all of the following functions will neccesarily take an argument */
       $(document).on('click', '#add', function(){
          App.populateAddress().then(r => App.handler = r[0]);
-         handleAdd();
+         handleAdd(jQuery('#addAmount').val());
       });
       $(document).on('click', '#makeHelpRequest', function(){
          App.populateAddress().then(r => App.handler = r[0]);
@@ -139,7 +139,7 @@ App = {
     },
 
     handleWithdraw : function(requestId){
-      App.contracts.SilkCode.methods.withdrawRequest(requestId);
+      App.contracts.SilkCode.methods.withdrawRequest(0);
 
     },
 
@@ -218,14 +218,18 @@ App = {
     ]
  }
   
-  async function handleAdd() {
+  async function handleAdd(amount) {
+    intAmount = parseInt(amount);
+      if (isNaN(intAmount)){
+        alert("input is not a number");
+        return false;
+      }
     ////const accounts = await web3.eth.getAccounts();
     let response;
-    App.populateAddress().then(r => App.handler = r[0]);
     console.log(App.handler);
     response = await App.contracts.SilkCode.methods.addEth().send({  //would return a boolean value
         from: App.handler,
-        value: 100000   //this is the amount entered in the front-end application
+        value: amount   //this is the amount entered in the front-end application
     });
   };
 
