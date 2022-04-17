@@ -9,7 +9,7 @@ App = {
   //web3Provider: null,
   web3: null,
   contracts: {},
-  address:'0x82a9990059d8afc7d13558cde209671597d55284', // Add contract address here
+  address:'0x6a144821764c896a045b28909562d28923670937', // Add contract address here
   network_id:3, // 5777 for local
   handler:null,
   value:1000000000000000000,
@@ -50,8 +50,6 @@ App = {
     //App.web3 = new Web3(window.ethereum);
     ethereum.enable();
     
-    reqAcc_Connect()
-
     //App.handler = ethereum.request({ method: 'eth_requestAccounts' }); 
     App.handler = reqAcc_Connect(); 
     return App.initContract();  
@@ -124,8 +122,11 @@ App = {
       alert("contract is undefined");
       return false;
     }
-    console.log("makeRequest");
-    App.contracts.SilkCode.methods.makeRequest().send({from:App.handler, value: intReward});
+    //console.log("makeRequest");
+    App.contracts.SilkCode.methods.makeRequest().send({from:App.handler, value: intReward})
+    .then((x) => {
+      console.log(x)
+    });
     //App.contract.methods.makeRequest(intReward);
 
   },
@@ -139,20 +140,28 @@ App = {
       return false;
     }
 
-    id = App.contracts.SilkCode.methods.payContract(requestId);
+    id = App.contracts.SilkCode.methods.payContract(requestId).send({from:App.handler})
+    .then((x) => {
+      console.log(x)
+    });
 
   },
 
   handleWithdraw : function(requestId){
-    App.contracts.SilkCode.methods.withdrawRequest(0);
-
+    console.log("calling withdrawRequest")
+    App.contracts.SilkCode.methods.withdrawRequest(requestId).send({from:App.handler})
+    .then((x) => {
+      console.log(x)
+    });
   },
 
   // creator is the address of the creator who's request is being accepted,
   // along with the requestId.
   handleAccept : function(creator, requestId){
-    App.contracts.SilkCode.methods.acceptRequest(requestId);
-
+    App.contracts.SilkCode.methods.acceptRequest(requestId).send({from:App.handler})
+    .then((x) => {
+      console.log(x)
+    });
   },
 
   "abi":[

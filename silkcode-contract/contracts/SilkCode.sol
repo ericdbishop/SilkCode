@@ -50,11 +50,9 @@ contract SilkCode {
     // the smart contract to be stored.
     function makeRequest() public payable returns (uint) {
         uint id = nextId;
-        helpRequest memory newRequest;
 
-        newRequest = helpRequest(msg.value, id, msg.sender, payable(msg.sender));
+        IdToRequest[id] = helpRequest(msg.value, id, msg.sender, payable(msg.sender));
         
-        IdToRequest[id] = newRequest;
         nextId += 1;
         return id;
     }
@@ -63,6 +61,7 @@ contract SilkCode {
     function payContract(uint requestID) public isValidId(requestID) isCreator(requestID) payable {
         address payable helper = IdToRequest[requestID].helper;
         uint reward = IdToRequest[requestID].reward;
+        assert(reward < (address(this).balance));
 
         IdToRequest[requestID].reward = 0;
 
@@ -72,10 +71,11 @@ contract SilkCode {
     function withdrawRequest(uint requestID) public isCreator(requestID) payable {
         uint reward = IdToRequest[requestID].reward;
         address payable creator = payable(msg.sender);
+        assert(reward < address(this).balance);
 
         IdToRequest[requestID].reward = 0;
 
-        creator.call{value:reward, gas:5000};
+        creator.transfer(reward);
     }
 
     // Called by helper when they begin a help request.
