@@ -9,7 +9,7 @@ App = {
   //web3Provider: null,
   web3: null,
   contracts: {},
-  address:'0x82a9990059d8afc7d13558cde209671597d55284', // Add contract address here
+  address:'0x9DbbCbe39476042B9f51e802CdB56189345c5335', // Add contract address here
   network_id:3, // 5777 for local
   handler:null,
   value:1000000000000000000,
@@ -68,10 +68,11 @@ App = {
     $(document).on('click', '#eth', function(){
        App.handleAccount();
     });
-    //$(document).on('click', '#createUser', function(){
-    //   App.populateAddress().then(r => App.handler = r[0]);
-    //   App.handleUser();
-    //});
+    $(document).on('click', '#createUser', function(){
+       App.populateAddress().then(r => App.handler = r[0]);
+       App.handleAccount();
+       App.db_create_account();
+    });
     /* Not all of the following functions will neccesarily take an argument */
     $(document).on('click', '#add', function(){
        App.populateAddress().then(r => App.handler = r[0]);
@@ -108,10 +109,26 @@ App = {
     reqAcc_Connect();
   },
 
+  //creates an account in the db by calling the express api
+  db_create_account : async function(){
+    //ethereum.request({ method: 'eth_requestAccounts' }); 
+    account = await reqAcc_Connect();
+    address = '/create_account/' + account.toString();
+    console.log(address);
+    $.get(address, function(data, status){
+      console.log('test_1 ${data}')
+    })
+    return account;
+  },
+
+  //requests account to view
+  db_view_profile : function (account) {
+
+  },
+
   //handleUser : function(){
   //  App.contracts.SilkCode.methods.createUser().send({from:App.handler});
   //},
-
 
   handleHelpRequest : function(reward){
     intReward = parseInt(reward);
@@ -127,7 +144,6 @@ App = {
     console.log("makeRequest");
     App.contracts.SilkCode.methods.makeRequest().send({from:App.handler, value: intReward});
     //App.contract.methods.makeRequest(intReward);
-
   },
 
   handlePay : function(requestId, rating){
