@@ -40,17 +40,20 @@ App = {
         //App.web3Provider = new Web3(Web3.currentProvider);
         App.web3 = new Web3(Web3.givenProvider);
         //console.log(window.ethereum);
-        console.log("web3 is undefined");
+        console.log("[Log] web3 is undefined");
       } else {
         //App.web3Provider = new Web3(App.url);
         App.web3 = new Web3(App.url);
-        console.log("web3 is defined");
+        console.log("[Log] web3 is defined");
       }
 
       //App.web3 = new Web3(window.ethereum);
       ethereum.enable();
-      App.handler = ethereum.request({ method: 'eth_requestAccounts' }); 
-         
+      
+      reqAcc_Connect()
+
+      //App.handler = ethereum.request({ method: 'eth_requestAccounts' }); 
+      App.handler = reqAcc_Connect(); 
       return App.initContract();  
     },
 
@@ -96,11 +99,13 @@ App = {
 
     populateAddress : async function(){
       // App.handler=App.web3.givenProvider.selectedAddress;
-        return await ethereum.request({method : 'eth_requestAccounts'});
+      //return await ethereum.request({method : 'eth_requestAccounts'});
+      return await reqAcc_Connect();
     },  
 
     handleAccount : function(){
-      ethereum.request({ method: 'eth_requestAccounts' }); 
+      //ethereum.request({ method: 'eth_requestAccounts' }); 
+      reqAcc_Connect();
     },
 
     //handleUser : function(){
@@ -218,6 +223,18 @@ App = {
     ]
  }
   
+  async function reqAcc_Connect() { //Moved ETH_request accounts to print errors
+    try {
+      response = ethereum.request({ method: 'eth_requestAccounts' });
+      console.log("Eth_ReqAcc: ", response);
+      return response
+    } catch (e) {
+      console.log("Error: ", e)
+      return null
+    };
+
+  };
+
   async function handleAdd() {
     ////const accounts = await web3.eth.getAccounts();
     let response;
