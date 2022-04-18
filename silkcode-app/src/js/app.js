@@ -47,19 +47,11 @@ App = {
     $(document).on('click', '#eth', function(){
        App.handleAccount();
     });
-<<<<<<< Updated upstream
-    $(document).on('click', '#createUser', function(){
-       App.populateAddress().then(r => App.handler = r[0]);
-       App.handleAccount();
-       App.db_create_account();
-    });
     /* Not all of the following functions will neccesarily take an argument */
-=======
     $(document).on('click', '#viewRequests', function(){
        App.populateAddress().then(r => App.handler = r[0]);
        handleView();
     });
->>>>>>> Stashed changes
     $(document).on('click', '#add', function(){
        App.populateAddress().then(r => App.handler = r[0]);
        handleAdd(jQuery('#addAmount').val());
@@ -99,23 +91,6 @@ App = {
   handleAccount : function(){
     //ethereum.request({ method: 'eth_requestAccounts' }); 
     reqAcc_Connect();
-  },
-
-  //creates an account in the db by calling the express api
-  db_create_account : async function(){
-    //ethereum.request({ method: 'eth_requestAccounts' }); 
-    account = await reqAcc_Connect();
-    address = '/create_account/' + account.toString();
-    console.log(address);
-    $.get(address, function(data, status){
-      console.log('test_1 ${data}')
-    })
-    return account;
-  },
-
-  //requests account to view
-  db_view_profile : function (account) {
-
   },
 
   //handleUser : function(){
