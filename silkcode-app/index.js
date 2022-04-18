@@ -1,9 +1,10 @@
 var express = require('./node_modules/express');
 var Web3 = require('web3');
-var fs = require('fs')
-//var Eth = require('web3-eth');
-//var contract = require("@truffle/contract");
+var fs = require('fs');
+var bodyParser = require('body-parser');
 var app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('src'));
 app.use(express.static('../silkcode-contract/build/contracts'));
 app.get('/', function (req, res) {
@@ -11,6 +12,7 @@ app.get('/', function (req, res) {
 });
 
 app.post('/request' , (req,res)=>{
+  console.log(req.body)
   response = {
     creator: req.body.creator,
     value: req.body.value, 
@@ -18,15 +20,17 @@ app.post('/request' , (req,res)=>{
     id: req.body.reqId
   }
   
-  var data = fs.readFileSync('../json/requests.json');
+  var data = fs.readFileSync('requests.json');
   var dataObj = JSON.parse(data);
-  dataObj.requests.push(request);
-  data = JSON.stringify(data);
-  console.log(data);
+  dataObj.requests.push(response);
+  data = JSON.stringify(dataObj);
 
-  fs.writeFile('../json/requests.json', JSON.stringify(data));
+  fs.writeFile('requests.json', data, function(err, result){
+    if(err) console.log('error', err);
+  }); 
+
 })
-
+ 
 app.listen(3010, function () {
   console.log('SilkCode Dapp listening on port 3010!');
 });
