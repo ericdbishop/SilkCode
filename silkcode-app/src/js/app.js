@@ -9,13 +9,14 @@ App = {
   //web3Provider: null,
   web3: null,
   contracts: {},
-  address:'0x9DbbCbe39476042B9f51e802CdB56189345c5335', // Add contract address here
+  address:'0xd33AB1A34247E8258bfe6cb28b1a0e14a3d1a52c', // Add contract address here
   network_id:3, // 5777 for local
   handler:null,
   value:1000000000000000000,
   index:0,
   margin:10,
   left:15,
+  id: 0,
 
   init: function() {
     return App.initWeb3();
@@ -50,8 +51,6 @@ App = {
     //App.web3 = new Web3(window.ethereum);
     ethereum.enable();
     
-    reqAcc_Connect()
-
     //App.handler = ethereum.request({ method: 'eth_requestAccounts' }); 
     App.handler = reqAcc_Connect(); 
     return App.initContract();  
@@ -80,7 +79,7 @@ App = {
     });
     $(document).on('click', '#makeHelpRequest', function(){
        App.populateAddress().then(r => App.handler = r[0]);
-       App.handleHelpRequest(jQuery('#reward').val());
+       App.handleHelpRequest(jQuery('#reward').val(), jQuery('#description').val());
     });
     $(document).on('click', '#payHelpRequest', function(){
        App.populateAddress().then(r => App.handler = r[0]);
@@ -130,7 +129,8 @@ App = {
   //  App.contracts.SilkCode.methods.createUser().send({from:App.handler});
   //},
 
-  handleHelpRequest : function(reward){
+
+  handleHelpRequest : function(reward, description){
     intReward = parseInt(reward);
     if (isNaN(intReward)){
       alert("input is not a number");
@@ -141,9 +141,21 @@ App = {
       alert("contract is undefined");
       return false;
     }
-    console.log("makeRequest");
-    App.contracts.SilkCode.methods.makeRequest().send({from:App.handler, value: intReward});
-    //App.contract.methods.makeRequest(intReward);
+    //console.log("makeRequest");
+    App.contracts.SilkCode.methods.makeRequest().send({from:App.handler, value: intReward})
+    .then((x) => {
+      console.log(x);
+      console.log(x.events.request.returnValues.id);
+      $.post('/request',
+        {
+          creator: x.events.request.returnValues.creator, 
+          value:intReward, 
+          requestDescription:description, 
+          reqId:x.events.request.returnValues.id
+        } 
+      );
+    });
+    //App.contract.methods.makeRequest(intReward)
   },
 
   handlePay : function(requestId, rating){
@@ -155,27 +167,49 @@ App = {
       return false;
     }
 
-    id = App.contracts.SilkCode.methods.payContract(requestId);
+    id = App.contracts.SilkCode.methods.payContract(requestId).send({from:App.handler})
+    .then((x) => {
+      console.log(x)
+    });
 
   },
 
   handleWithdraw : function(requestId){
-    App.contracts.SilkCode.methods.withdrawRequest(0);
-
+    console.log("calling withdrawRequest")
+    App.contracts.SilkCode.methods.withdrawRequest(requestId).send({from:App.handler})
+    .then((x) => {
+      console.log(x)
+    });
   },
 
   // creator is the address of the creator who's request is being accepted,
   // along with the requestId.
   handleAccept : function(creator, requestId){
-    App.contracts.SilkCode.methods.acceptRequest(requestId);
-
+    App.contracts.SilkCode.methods.acceptRequest(requestId).send({from:App.handler})
+    .then((x) => {
+      console.log(x)
+    });
   },
 
   "abi":[
     {
-      "inputs": [],
-      "stateMutability": "payable",
-      "type": "constructor"
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "creator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "name": "request",
+      "type": "event"
     },
     {
       "inputs": [
@@ -200,13 +234,7 @@ App = {
     {
       "inputs": [],
       "name": "makeRequest",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
+      "outputs": [],
       "stateMutability": "payable",
       "type": "function"
     },
@@ -222,6 +250,11 @@ App = {
       "outputs": [],
       "stateMutability": "payable",
       "type": "function"
+    },
+    {
+      "inputs": [],
+      "stateMutability": "payable",
+      "type": "constructor"
     },
     {
       "inputs": [
