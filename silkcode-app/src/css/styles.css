@@ -34,3 +34,9 @@ button {
 input {
     margin:10px 5px;
 }
+
+th, td {
+    border: 1px solid #ffccff;
+    padding: 15px;
+    text-align: left;
+  }

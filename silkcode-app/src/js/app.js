@@ -16,7 +16,6 @@ App = {
   index:0,
   margin:10,
   left:15,
-  id: 0,
 
   init: function() {
     return App.initWeb3();
@@ -84,6 +83,37 @@ App = {
   handleUpdate : function(){
     $.get('/update').then((response) => {
       console.log(response)
+
+      var obj = JSON.parse(response);
+      var table = document.createElement("table");
+      var row = table.insertRow(0);
+
+      var creator = row.insertCell(0);
+      var reward = row.insertCell(1);
+      var description = row.insertCell(2);
+      var id = row.insertCell(3);
+
+      creator.innerHTML = "Creator Address";
+      reward.innerHTML = "Contract Reward"
+      description.innerHTML = "Description";
+      id.innerHTML = "Request id";
+
+      for (let i = 1; i <= obj.requests.length; i++) {
+        var row = table.insertRow(i);
+
+        var creator = row.insertCell(0);
+        var reward = row.insertCell(1);
+        var description = row.insertCell(2);
+        var id = row.insertCell(3);
+
+        creator.innerHTML = obj.requests[i-1].creator;
+        reward.innerHTML = obj.requests[i-1].reward;
+        description.innerHTML = obj.requests[i-1].description;
+        id.innerHTML = obj.requests[i-1].id;
+      }
+
+      document.getElementById("reqTable").innerHTML = table.innerHTML;
+
     })
   },
 
