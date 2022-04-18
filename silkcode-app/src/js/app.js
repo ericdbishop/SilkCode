@@ -48,9 +48,8 @@ App = {
        App.handleAccount();
     });
     /* Not all of the following functions will neccesarily take an argument */
-    $(document).on('click', '#viewRequests', function(){
-       App.populateAddress().then(r => App.handler = r[0]);
-       handleView();
+    $(document).on('click', '#updateRequests', function(){
+       App.handleUpdate();
     });
     $(document).on('click', '#add', function(){
        App.populateAddress().then(r => App.handler = r[0]);
@@ -82,7 +81,7 @@ App = {
     return await reqAcc_Connect();
   },  
 
-  handleView : function(){
+  handleUpdate : function(){
     $.get('/update').then((response) => {
       console.log(response)
     })

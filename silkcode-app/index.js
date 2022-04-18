@@ -34,6 +34,7 @@ app.post('/request' , (req,res)=>{
 
 app.get('/update', (req,res)=>{
   var data = fs.readFileSync('requests.json');
+  res.send(data);
 })
  
 app.listen(3010, function () {
