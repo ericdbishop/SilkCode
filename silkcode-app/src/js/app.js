@@ -9,7 +9,7 @@ App = {
   //web3Provider: null,
   web3: null,
   contracts: {},
-  address:'0xd33AB1A34247E8258bfe6cb28b1a0e14a3d1a52c', // Add contract address here
+  address:'0xd442b6b5ed53f1be89e8d6b1176f9c04acac6b20', // Add contract address here
   network_id:3, // 5777 for local
   handler:null,
   value:1000000000000000000,
@@ -107,7 +107,7 @@ App = {
         var id = row.insertCell(3);
 
         creator.innerHTML = obj.requests[i-1].creator;
-        reward.innerHTML = obj.requests[i-1].reward;
+        reward.innerHTML = obj.requests[i-1].value;
         description.innerHTML = obj.requests[i-1].description;
         id.innerHTML = obj.requests[i-1].id;
       }
@@ -122,11 +122,6 @@ App = {
     reqAcc_Connect();
   },
 
-  //handleUser : function(){
-  //  App.contracts.SilkCode.methods.createUser().send({from:App.handler});
-  //},
-
-
   handleHelpRequest : function(reward, description){
     intReward = parseInt(reward);
     if (isNaN(intReward)){
@@ -138,7 +133,6 @@ App = {
       alert("contract is undefined");
       return false;
     }
-    //console.log("makeRequest");
     App.contracts.SilkCode.methods.makeRequest().send({from:App.handler, value: intReward})
     .then((x) => {
       console.log(x);
@@ -154,12 +148,9 @@ App = {
     }).then((response) => {
       console.log(response);
     });
-    //App.contract.methods.makeRequest(intReward)
   },
 
   handlePay : function(requestId, rating){
-    // If requestId doesn't exist...
-
     // If rating is not valid
     if (rating > 100 || rating < 0){
       alert("Please enter a valid rating.");
@@ -191,6 +182,11 @@ App = {
   },
 
   "abi":[
+    {
+      "inputs": [],
+      "stateMutability": "payable",
+      "type": "constructor"
+    },
     {
       "anonymous": false,
       "inputs": [
@@ -251,11 +247,6 @@ App = {
       "type": "function"
     },
     {
-      "inputs": [],
-      "stateMutability": "payable",
-      "type": "constructor"
-    },
-    {
       "inputs": [
         {
           "internalType": "uint256",
@@ -289,7 +280,6 @@ async function handleAdd(amount) {
       alert("input is not a number");
       return false;
     }
-  ////const accounts = await web3.eth.getAccounts();
   let response;
   console.log(App.handler);
   response = await App.contracts.SilkCode.methods.addEth().send({  //would return a boolean value
