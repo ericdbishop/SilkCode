@@ -1,3 +1,4 @@
 silkcode-app/node_modules/*
 silkcode-app/package-lock.json
 silkcode-contract/build/contracts/*
+silkcode-app/requests.json

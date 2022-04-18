@@ -29,6 +29,11 @@ app.post('/request' , (req,res)=>{
     if(err) console.log('error', err);
   }); 
 
+  res.send(data);
+})
+
+app.get('/update', (req,res)=>{
+  var data = fs.readFileSync('requests.json');
 })
  
 app.listen(3010, function () {

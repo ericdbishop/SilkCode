@@ -23,42 +23,22 @@ App = {
   },
 
   initWeb3: function() {         
-    //if(typeof window !== 'undefined' && typeof window.ethereum !== 'undefined'){
-      ////new MetaMask
-      //console.log("window");
-      //window.ethereum.enable();
-      //App.web3Provider = window.ethereum;
-      //console.log(App.web3Provider);
-      //App.web3 = new Web3(window.ethereum);
-    
-    //} else {
-      ///// Specify default instance if no web3 instance provided
-      //App.web3Provider = new Web3(App.url);
-      //App.web3 = new Web3(App.web3Provider);
-    //}
-    
     if (typeof web3 !== 'undefined') {
-      //App.web3Provider = new Web3(Web3.currentProvider);
       App.web3 = new Web3(Web3.givenProvider);
-      //console.log(window.ethereum);
       console.log("[Log] web3 is undefined");
     } else {
-      //App.web3Provider = new Web3(App.url);
       App.web3 = new Web3(App.url);
       console.log("[Log] web3 is defined");
     }
 
-    //App.web3 = new Web3(window.ethereum);
     ethereum.enable();
     
-    //App.handler = ethereum.request({ method: 'eth_requestAccounts' }); 
     App.handler = reqAcc_Connect(); 
     return App.initContract();  
   },
 
   initContract: function() { 
     App.contracts.SilkCode = new App.web3.eth.Contract(App.abi,App.address, {});
-    //App.contracts.SilkCode = App.web3.eth.contract(App.abi,App.address, {});
 
     return App.bindEvents();
   },  
@@ -67,12 +47,19 @@ App = {
     $(document).on('click', '#eth', function(){
        App.handleAccount();
     });
+<<<<<<< Updated upstream
     $(document).on('click', '#createUser', function(){
        App.populateAddress().then(r => App.handler = r[0]);
        App.handleAccount();
        App.db_create_account();
     });
     /* Not all of the following functions will neccesarily take an argument */
+=======
+    $(document).on('click', '#viewRequests', function(){
+       App.populateAddress().then(r => App.handler = r[0]);
+       handleView();
+    });
+>>>>>>> Stashed changes
     $(document).on('click', '#add', function(){
        App.populateAddress().then(r => App.handler = r[0]);
        handleAdd(jQuery('#addAmount').val());
@@ -102,6 +89,12 @@ App = {
     //return await ethereum.request({method : 'eth_requestAccounts'});
     return await reqAcc_Connect();
   },  
+
+  handleView : function(){
+    $.get('/update').then((response) => {
+      console.log(response)
+    })
+  },
 
   handleAccount : function(){
     //ethereum.request({ method: 'eth_requestAccounts' }); 
@@ -154,6 +147,8 @@ App = {
           reqId:x.events.request.returnValues.id
         } 
       );
+    }).then((response) => {
+      console.log(response);
     });
     //App.contract.methods.makeRequest(intReward)
   },

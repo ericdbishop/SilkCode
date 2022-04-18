@@ -4,36 +4,36 @@ contract SilkCode {
 
     uint nextId;
 
+    // Struct for new help requests including the reward amount, id of the
+    // request, creator address, and the address of the helping programmer.
     struct helpRequest {
         uint reward;
         uint id;
         address creator;
         address payable helper;
     }
+    // IdToRequest maps each request id to a helpRequest struct.
     mapping(uint => helpRequest) IdToRequest;
 
     address publisher;
 
+    // Event that is emitted on succesful creation of a help request.
     event request(address creator, uint id);
        //modifiers
 
-    modifier onlyPublisher()
-     {require(msg.sender == publisher);
-      _;
-     }
-
+    // Require that the caller is the owner of the request with the id, ID
     modifier isCreator(uint ID) {
-        // require the reward of the help request mapped to ID is not null
         require(IdToRequest[ID].creator == msg.sender);
         _;
      }
 
+    // Require the reward of the help request mapped to ID is not null
     modifier isValidId(uint ID) {
-        // require the reward of the help request mapped to ID is not null
         require(IdToRequest[ID].reward > 0);
         _;
      }
 
+    // Require that there is a helper for a request with id, ID
     modifier helperDoesNotExist(uint ID) 
      {
         require(IdToRequest[ID].helper == IdToRequest[ID].creator);
@@ -45,10 +45,11 @@ contract SilkCode {
         nextId = 0;
     }
 
+    // Function to add eth to the smart contract.
     function addEth() public payable {}
 
-    // When creating a help request, send the payout you will be rewarding to
-    // the smart contract to be stored.
+    // Create a help request, send the payout you will be rewarding, to
+    // the smart contract, to be stored.
     function makeRequest() public payable {
         uint id = nextId;
 
@@ -58,7 +59,8 @@ contract SilkCode {
         emit request(msg.sender, id);
     }
 
-    // When a request has been fulfilled, pay out the reward.
+    // When a request has been fulfilled, the creator of the request calls this
+    // to pay out the reward.
     function payContract(uint requestID) public isValidId(requestID) isCreator(requestID) payable {
         address payable helper = IdToRequest[requestID].helper;
         uint reward = IdToRequest[requestID].reward;
@@ -69,6 +71,7 @@ contract SilkCode {
         helper.transfer(reward);
     }
 
+    // A creator can call this function to nullify their help request from the marketplace.
     function withdrawRequest(uint requestID) public isCreator(requestID) payable {
         uint reward = IdToRequest[requestID].reward;
         address payable creator = payable(msg.sender);
@@ -79,7 +82,7 @@ contract SilkCode {
         creator.transfer(reward);
     }
 
-    // Called by helper when they begin a help request.
+    // Called by helper when they decide to begin a help request.
     function acceptRequest(uint requestID) public isValidId(requestID) helperDoesNotExist(requestID) {
         IdToRequest[requestID].helper = payable(msg.sender);
     }
