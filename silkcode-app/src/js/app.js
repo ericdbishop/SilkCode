@@ -1,3 +1,7 @@
+// Used the following resource for altering the SilkCode.sol contract to reflect the use of our token.
+// https://dapp-world.com/smartbook/accept-an-erc20-token-as-payment-in-smart-contract-zsqV 
+
+
 // Used the counter-app app.js as an example to go off of as far as how to
 // structure app.js.
 

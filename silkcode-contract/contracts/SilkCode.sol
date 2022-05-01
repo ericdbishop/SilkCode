@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.5.16;
+
+import "../../silkcode-app/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
 contract SilkCode {
 
+    IERC20 silk;
     uint nextId;
 
     // Struct for new help requests including the reward amount, id of the
@@ -41,6 +45,8 @@ contract SilkCode {
      }
 
     constructor() payable {
+        silk = IERC20();
+
         publisher = msg.sender;
         nextId = 0;
     }
@@ -50,11 +56,15 @@ contract SilkCode {
 
     // Create a help request, send the payout you will be rewarding, to
     // the smart contract, to be stored.
-    function makeRequest() public payable {
+    function makeRequest(uint reward) public payable {
         uint id = nextId;
 
+        require(reward < getBalance(), "SILK balance is too low");
+
         IdToRequest[id] = helpRequest(msg.value, id, msg.sender, payable(msg.sender));
-        
+
+        silk.transfer(address(this), reward);
+
         nextId += 1;
         emit request(msg.sender, id);
     }
@@ -64,27 +74,41 @@ contract SilkCode {
     function payContract(uint requestID) public isValidId(requestID) isCreator(requestID) payable {
         address payable helper = IdToRequest[requestID].helper;
         uint reward = IdToRequest[requestID].reward;
-        assert(reward < (address(this).balance));
+        assert(reward < contractBalance());
 
         IdToRequest[requestID].reward = 0;
 
-        helper.transfer(reward);
+        silk.transferFrom(address(this), helper, reward);
+        //helper.transfer(reward);
     }
 
     // A creator can call this function to nullify their help request from the marketplace.
     function withdrawRequest(uint requestID) public isCreator(requestID) payable {
         uint reward = IdToRequest[requestID].reward;
         address payable creator = payable(msg.sender);
-        assert(reward < address(this).balance);
+        assert(reward < contractBalance());
 
         IdToRequest[requestID].reward = 0;
 
-        creator.transfer(reward);
+        silk.transferFrom(address(this), creator, reward);
+        //creator.transfer(reward);
     }
 
     // Called by helper when they decide to begin a help request.
     function acceptRequest(uint requestID) public isValidId(requestID) helperDoesNotExist(requestID) {
         IdToRequest[requestID].helper = payable(msg.sender);
+    }
+
+    function getAllowance() public view returns (uint256) {
+        return silk.allowance(msg.sender, address(this));
+    }
+
+    function getBalance() public view returns (uint256) {
+        return silk.balanceOf(msg.sender);
+    }
+
+    function contractBalance() public view returns (uint256) {
+        return silk.balanceOf(address(this));
     }
 
 }
