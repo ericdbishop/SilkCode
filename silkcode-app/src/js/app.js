@@ -13,7 +13,7 @@ App = {
   //web3Provider: null,
   web3: null,
   contracts: {},
-  address:'0xd442b6b5ed53f1be89e8d6b1176f9c04acac6b20', // Add contract address here
+  address:'0x6eC7a8085024de37bd4F51e35582FC4F8B812D57', // Add contract address here OLD ADDRESS: 0xd442b6b5ed53f1be89e8d6b1176f9c04acac6b20
   network_id:3, // 5777 for local
   handler:null,
   value:1000000000000000000,
@@ -187,11 +187,6 @@ App = {
 
   "abi":[
     {
-      "inputs": [],
-      "stateMutability": "payable",
-      "type": "constructor"
-    },
-    {
       "anonymous": false,
       "inputs": [
         {
@@ -231,8 +226,32 @@ App = {
       "type": "function"
     },
     {
-      "inputs": [],
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "reward",
+          "type": "uint256"
+        }
+      ],
       "name": "makeRequest",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "ownerAirdrop",
       "outputs": [],
       "stateMutability": "payable",
       "type": "function"
@@ -251,6 +270,18 @@ App = {
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "retrieveEth",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "stateMutability": "payable",
+      "type": "constructor"
+    },
+    {
       "inputs": [
         {
           "internalType": "uint256",
@@ -262,8 +293,129 @@ App = {
       "outputs": [],
       "stateMutability": "payable",
       "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getAllowance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "silk",
+      "outputs": [
+        {
+          "internalType": "contract IERC20",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
     }
   ]
+    
+  
+//      [
+//    {
+//      "inputs": [],
+//      "stateMutability": "payable",
+//      "type": "constructor"
+//    },
+//    {
+//      "anonymous": false,
+//      "inputs": [
+//        {
+//          "indexed": false,
+//          "internalType": "address",
+//          "name": "creator",
+//          "type": "address"
+//        },
+//        {
+//          "indexed": false,
+//          "internalType": "uint256",
+//          "name": "id",
+//          "type": "uint256"
+//        }
+//      ],
+//      "name": "request",
+//      "type": "event"
+//    },
+//    {
+//      "inputs": [
+//        {
+//          "internalType": "uint256",
+//          "name": "requestID",
+//          "type": "uint256"
+//        }
+//      ],
+//      "name": "acceptRequest",
+//      "outputs": [],
+//      "stateMutability": "nonpayable",
+//      "type": "function"
+//    },
+//    {
+//      "inputs": [],
+//      "name": "addEth",
+//      "outputs": [],
+//      "stateMutability": "payable",
+//      "type": "function"
+//    },
+//    {
+//      "inputs": [],
+//      "name": "makeRequest",
+//      "outputs": [],
+//      "stateMutability": "payable",
+//      "type": "function"
+//    },
+//    {
+//      "inputs": [
+//        {
+//          "internalType": "uint256",
+//          "name": "requestID",
+//          "type": "uint256"
+//        }
+//      ],
+//      "name": "payContract",
+//      "outputs": [],
+//      "stateMutability": "payable",
+//      "type": "function"
+//    },
+//    {
+//      "inputs": [
+//        {
+//          "internalType": "uint256",
+//          "name": "requestID",
+//          "type": "uint256"
+//        }
+//      ],
+//      "name": "withdrawRequest",
+//      "outputs": [],
+//      "stateMutability": "payable",
+//      "type": "function"
+//    }
+//  ]
+
 }
 
 async function reqAcc_Connect() { //Moved ETH_request accounts to print errors

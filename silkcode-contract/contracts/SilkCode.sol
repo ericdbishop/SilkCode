@@ -49,7 +49,7 @@ contract SilkCode {
      }
 
     constructor() payable {
-        silk = IERC20(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4);
+        silk = IERC20(0x0608C275250E37291026861487C9BA8c8Bb089B1); // Insert token contract address as the argument for the IERC20 function.
 
         publisher = msg.sender;
         nextId = 0;
@@ -61,11 +61,10 @@ contract SilkCode {
     // Create a help request, send the payout you will be rewarding, to
     // the smart contract, to be stored.
     function makeRequest(uint reward) public {
+        require(reward <= getAllowance(), "SilkCode does not have the allowance to pay the reward");
         uint id = nextId;
 
         IdToRequest[id] = helpRequest(reward, id, msg.sender, msg.sender);
-
-        silk.transferFrom(msg.sender, address(this), reward);
 
         nextId += 1;
         emit request(msg.sender, id);
@@ -75,30 +74,27 @@ contract SilkCode {
     // to pay out the reward.
     function payContract(uint requestID) public isValidId(requestID) isCreator(requestID) payable {
         address helper = IdToRequest[requestID].helper;
+        address creator = IdToRequest[requestID].creator;
+
         uint reward = IdToRequest[requestID].reward;
-        assert(reward < contractBalance());
 
         IdToRequest[requestID].reward = 0;
 
-        silk.transferFrom(address(this), helper, reward);
-        //helper.transfer(reward);
+        silk.transferFrom(creator, helper, reward);
     }
 
     // A creator can call this function to nullify their help request from the marketplace.
     function withdrawRequest(uint requestID) public isCreator(requestID) payable {
-        uint reward = IdToRequest[requestID].reward;
-        address creator = msg.sender;
-        assert(reward < contractBalance());
-
         IdToRequest[requestID].reward = 0;
-
-        silk.transferFrom(address(this), creator, reward);
-        //creator.transfer(reward);
     }
 
     // Called by helper when they decide to begin a help request.
     function acceptRequest(uint requestID) public isValidId(requestID) helperDoesNotExist(requestID) {
         IdToRequest[requestID].helper = msg.sender;
+    }
+
+    function ownerAirdrop(address recipient, uint amount) public isOwner() payable {
+        silk.transferFrom(msg.sender, recipient, amount);
     }
 
     function getAllowance() public view returns (uint256) {
@@ -109,11 +105,8 @@ contract SilkCode {
         return silk.balanceOf(msg.sender);
     }
 
-    function contractBalance() public view returns (uint256) {
-        return silk.balanceOf(address(this));
-    }
-
     function retrieveEth() public isOwner payable {
         payable(msg.sender).transfer(address(this).balance);
     }
+
 }
