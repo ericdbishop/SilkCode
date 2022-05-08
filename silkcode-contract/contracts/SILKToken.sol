@@ -20,6 +20,7 @@ contract SILK is ERC20Capped {
         _;
     }
 
+    // For use in testing just to retrieve the eth the contract was deployed with.
     function retrieveEth() public isOwner payable {
         payable(msg.sender).transfer(address(this).balance);
     }

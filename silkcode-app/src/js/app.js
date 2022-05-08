@@ -54,7 +54,7 @@ App = {
     $(document).on('click', '#getTokenBalance', function(){
       App.populateAddress().then(r => App.handler = r[0]);
       App.getTokenBalance();
-    })
+    });
     $(document).on('click', '#updateRequests', function(){
       App.handleUpdate();
      });

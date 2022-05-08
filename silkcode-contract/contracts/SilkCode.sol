@@ -93,24 +93,26 @@ contract SilkCode {
         IdToRequest[requestID].helper = msg.sender;
     }
 
+    // This function is used for the owner to airdrop a certain amount of SILK to a user.
     function ownerAirdrop(address recipient, uint amount) public isOwner() payable {
+        require(amount <= getAllowance(), "SilkCode does not have the allowance to airdrop this amount");
+
         silk.transferFrom(msg.sender, recipient, amount);
     }
 
+    // View the marketplace's SILK allowance for msg.sender
     function getAllowance() public view returns (uint256) {
         return silk.allowance(msg.sender, address(this));
     }
 
+    // View the SILK balance for msg.sender
     function getBalance() public view returns (uint256) {
         return silk.balanceOf(msg.sender);
     }
 
+    // Retrieve the eth from the contract (For use in testing)
     function retrieveEth() public isOwner payable {
         payable(msg.sender).transfer(address(this).balance);
-    }
-
-    function airDrop(address recipient, uint value) public isOwner payable {
-        silk.transfer(recipient, value);
     }
 
 }
