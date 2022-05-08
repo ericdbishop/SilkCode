@@ -6,13 +6,19 @@ html {
 h1 {	
 	color:#ffccff;
 	text-align:center;
-	padding: 3px;
-	margin: 20px auto;
+	padding: 2px;
+	margin: 5px auto;
+  padding-bottom: 0px;
+}
+
+h3 {
+  margin: 5px auto;
+  padding: 2px auto;
 }
 
 main {
 	margin: auto;
-	padding: 20px;
+	padding: 0px;
 }
 
 div {
@@ -24,19 +30,33 @@ button {
     background-color: #632c6e; /* Green */
     border: none;
     color: white;
-    padding: 10px 16px;
+    padding: 5px 8px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    margin-bottom: 0px
   } 
 
 input {
-    margin:10px 5px;
+    margin:5px 5px;
 }
 
 th, td {
-    border: 1px solid #ffccff;
-    padding: 15px;
+    border-bottom: 1px solid #ffccff;
+    padding: 5px;
     text-align: left;
-  }
+    word-wrap: break-word;
+}
+
+tr:hover {background-color: rgb(238, 80, 255);}
+
+table {
+  margin: 0px;
+  overflow-x:auto;
+  padding: 5px;
+  border-collapse: collapse;
+  border-bottom: 1px solid;
+  width: 90%;
+  text-align: left
+}

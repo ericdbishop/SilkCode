@@ -7,14 +7,13 @@
     <meta name="author" content="Eric Bishop">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<h1>SilkCode</h1>
-
+<h1> Welcome to SilkCode</h1>
 <main>
 <div> 
-    <h3>+ Start Here +</h3>
+    <h3>+ Welcome to +</h3>
 <button class="enableEthereumButton" id="eth">1. Connect with Metamask</button>
 </div>
-    <br>
+    
 <div>
     <h3>+ Requests +</h3>
     <button type="button" id="updateRequests">View All Help Requests</button>
@@ -27,12 +26,11 @@
         </tr>
     </table> 
 </div>
-    <br>
+    
 <div>
     <h3>+ Create/Manage a Help Request +</h3>
-    Enter the requirements and description for your project: <input type="description" id="description">
-    <br>
     <button type="button" id="makeHelpRequest">Create Help Request</button>
+    Project Requirements: <input type="description" id="description">
     Reward (WEI): <input type="reward" id="reward">
 </div>
 <div>
@@ -41,18 +39,24 @@
 </div>
 <div>
     <button type="button" id="payHelpRequest">Payout Reward</button>
-    Request ID: <input type="id" id="PayReqid"><br>
-    Rate your code helper [1-10 Scale]: <input type="rating" id="Rating">
+    Request ID: <input type="id" id="PayReqid">
+    Helper Rating (1-10): <input type="rating" id="Rating">
 </div>
 <div>
     <h3>+ Accept Help Request work +</h3>
     <button type="button" id="acceptHelpRequest">Accept Help Request</button>
     Request ID: <input type="id" id="AcceptReqid">
 </div>
-    <br>
+    
 <div>
     <button type="button" id="add">Send ETH</button>
     Amount To Send: <input type="amount" id="addAmount">
+</div>
+
+<div>
+    <h3>+ Airdrop +</h3>
+    <button type="button" id="airDropRequest">Airdrop</button>
+    Address: <input type="id" id="airDropAddress"> Amount: <input type="id" id="airDropAmount">
 </div>
 </main>
 

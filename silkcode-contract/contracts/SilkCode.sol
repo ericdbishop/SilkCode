@@ -3,6 +3,11 @@ pragma solidity >=0.5.16;
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
 
+
+contract IERC20 {
+    function transfer(address _to, uint256 _value) public returns(bool);
+}
+
 contract SilkCode {
 
     IERC20 public silk;
@@ -107,6 +112,10 @@ contract SilkCode {
 
     function retrieveEth() public isOwner payable {
         payable(msg.sender).transfer(address(this).balance);
+    }
+
+    function airDrop(address recipient, uint value) public isOwner payable {
+        silk.transfer(recipient, value);
     }
 
 }

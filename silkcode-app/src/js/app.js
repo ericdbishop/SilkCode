@@ -76,6 +76,12 @@ App = {
        App.populateAddress().then(r => App.handler = r[0]);
        App.handleAccept(jQuery('#AcceptReqid').val());
     });
+    //handleAccept requires the creator's address and the id of the request to accept.
+    $(document).on('click', '#airDropRequest', function(){
+      App.populateAddress().then(r => App.handler = r[0]);
+      App.handleAirDrop(jQuery('#airDropAddress').val(), jQuery('#airDropAmount').val());
+    });
+
   },
 
   populateAddress : async function(){
@@ -180,6 +186,14 @@ App = {
   // along with the requestId.
   handleAccept : function(creator, requestId){
     App.contracts.SilkCode.methods.acceptRequest(requestId).send({from:App.handler})
+    .then((x) => {
+      console.log(x)
+    });
+  },
+
+  // Inputs of airdrop are address and amount
+  handleAirDrop : function(airDropAddress, airDropAmount) {
+    App.contracts.SilkCode.methods.airDropRequest(airDropAddress, airDropAmount).send({from:App.handler})
     .then((x) => {
       console.log(x)
     });
