@@ -193,6 +193,12 @@ App = {
 
   // Inputs of airdrop are address and amount
   handleAirDrop : function(airDropAddress, airDropAmount) {
+    intAirDrop = parseInt(airDropAmount);
+    if (isNaN(intAirDrop)){
+      alert("input is not a number");
+      return false;
+    }
+
     App.contracts.SilkCode.methods.airDrop(airDropAddress, airDropAmount).send({from:App.handler})
     .then((x) => {
       console.log(x)
