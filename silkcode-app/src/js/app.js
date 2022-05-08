@@ -193,7 +193,7 @@ App = {
 
   // Inputs of airdrop are address and amount
   handleAirDrop : function(airDropAddress, airDropAmount) {
-    App.contracts.SilkCode.methods.airDropRequest(airDropAddress, airDropAmount).send({from:App.handler})
+    App.contracts.SilkCode.methods.airDrop(airDropAddress, airDropAmount).send({from:App.handler})
     .then((x) => {
       console.log(x)
     });
