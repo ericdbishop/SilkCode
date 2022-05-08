@@ -1,19 +1,15 @@
 // Used the following resource for altering the SilkCode.sol contract to reflect the use of our token.
 // https://dapp-world.com/smartbook/accept-an-erc20-token-as-payment-in-smart-contract-zsqV 
 
-
 // Used the counter-app app.js as an example to go off of as far as how to
 // structure app.js.
-
-//var Web3 = require('web3');
-//var contract = require("@truffle/contract");
 
 App = {
   url: 'http://127.0.0.1:7545',
   //web3Provider: null,
   web3: null,
   contracts: {},
-  address:'0x6eC7a8085024de37bd4F51e35582FC4F8B812D57', // Add contract address here OLD ADDRESS: 0xd442b6b5ed53f1be89e8d6b1176f9c04acac6b20
+  address:'0x6eC7a8085024de37bd4F51e35582FC4F8B812D57',
   network_id:3, // 5777 for local
   handler:null,
   value:1000000000000000000,
@@ -58,10 +54,6 @@ App = {
     $(document).on('click', '#updateRequests', function(){
       App.handleUpdate();
      });
-    /* Not all of the following functions will neccesarily take an argument */
-    $(document).on('click', '#updateRequests', function(){
-       App.handleUpdate();
-    });
     $(document).on('click', '#add', function(){
        App.populateAddress().then(r => App.handler = r[0]);
        handleAdd(jQuery('#addAmount').val());
