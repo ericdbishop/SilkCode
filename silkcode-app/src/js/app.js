@@ -50,6 +50,13 @@ App = {
     $(document).on('click', '#eth', function(){
        App.handleAccount();
     });
+    $(document).on('click', '#getTokenBalance', function(){
+      App.populateAddress().then(r => App.handler = r[0]);
+      App.getTokenBalance()
+    })
+    $(document).on('click', '#updateRequests', function(){
+      App.handleUpdate();
+     });
     /* Not all of the following functions will neccesarily take an argument */
     $(document).on('click', '#updateRequests', function(){
        App.handleUpdate();
@@ -78,7 +85,7 @@ App = {
     });
     //handleAccept requires the creator's address and the id of the request to accept.
     $(document).on('click', '#airDropRequest', function(){
-      //App.populateAddress().then(r => App.handler = r[0]);
+      App.populateAddress().then(r => App.handler = r[0]);
       App.handleAirDrop(jQuery('#airDropAddress').val(), jQuery('#airDropAmount').val());
     });
 
@@ -88,6 +95,12 @@ App = {
     // App.handler=App.web3.givenProvider.selectedAddress;
     //return await ethereum.request({method : 'eth_requestAccounts'});
     return await reqAcc_Connect();
+  },  
+
+  getTokenBalance : function(address){
+    // App.handler=App.web3.givenProvider.selectedAddress;
+    //return await ethereum.request({method : 'eth_requestAccounts'});
+    return await  App.contracts.SilkCode.methods.getTokenBalance()
   },  
 
   handleUpdate : function(){
@@ -143,7 +156,7 @@ App = {
       alert("contract is undefined");
       return false;
     }
-    App.contracts.SilkCode.methods.makeRequest().send({from:App.handler, value: intReward})
+    App.contracts.SilkCode.methods.makeRequest(reward).send({from:App.handler})
     .then((x) => {
       console.log(x);
       console.log(x.events.request.returnValues.id);
