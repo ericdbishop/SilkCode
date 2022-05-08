@@ -3,11 +3,6 @@ pragma solidity >=0.5.16;
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
 
-
-contract IERC20 {
-    function transfer(address _to, uint256 _value) public returns(bool);
-}
-
 contract SilkCode {
 
     IERC20 public silk;

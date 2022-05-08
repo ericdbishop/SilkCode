@@ -78,7 +78,7 @@ App = {
     });
     //handleAccept requires the creator's address and the id of the request to accept.
     $(document).on('click', '#airDropRequest', function(){
-      App.populateAddress().then(r => App.handler = r[0]);
+      //App.populateAddress().then(r => App.handler = r[0]);
       App.handleAirDrop(jQuery('#airDropAddress').val(), jQuery('#airDropAmount').val());
     });
 
@@ -199,7 +199,7 @@ App = {
       return false;
     }
 
-    App.contracts.SilkCode.methods.airDrop(airDropAddress, airDropAmount).send({from:App.handler})
+    App.contracts.SilkCode.methods.ownerAirDrop(airDropAddress, airDropAmount).send({from:App.handler})
     .then((x) => {
       console.log(x)
     });
