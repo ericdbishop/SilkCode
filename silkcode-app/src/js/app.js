@@ -9,7 +9,7 @@ App = {
   //web3Provider: null,
   web3: null,
   contracts: {},
-  address:'0x6eC7a8085024de37bd4F51e35582FC4F8B812D57',
+  address:'0x1bf3c72bb019d51d33cacb898c556f4f10b34238',
   network_id:3, // 5777 for local
   handler:null,
   value:1000000000000000000,
@@ -64,7 +64,7 @@ App = {
     });
     $(document).on('click', '#payHelpRequest', function(){
        App.populateAddress().then(r => App.handler = r[0]);
-       App.handlePay(jQuery('#PayReqid').val(), jQuery('#rating').val());
+       App.handlePay(jQuery('#PayReqid').val());
     });
     //handleWithdraw requires the id of the request to remove.
     $(document).on('click', '#withdrawHelpRequest', function(){
@@ -85,19 +85,13 @@ App = {
   },
 
   populateAddress : async function(){
-    // App.handler=App.web3.givenProvider.selectedAddress;
-    //return await ethereum.request({method : 'eth_requestAccounts'});
     return await reqAcc_Connect();
   },  
 
   getTokenBalance : function(){
-    // App.handler=App.web3.givenProvider.selectedAddress;
-    //alert("TEST");
-    //return await ethereum.request({method : 'eth_requestAccounts'});
     bal = App.contracts.SilkCode.methods.getBalance().call({from:App.handler})
     .then((x) => {
       console.log(x);
-      //console.log(x.returnValues)
       var balanceString = String(x) + " Silk"
       document.getElementById("tokenBal").innerHTML = balanceString;
     })},  
@@ -140,7 +134,6 @@ App = {
   },
 
   handleAccount : function(){
-    //ethereum.request({ method: 'eth_requestAccounts' }); 
     reqAcc_Connect();
   },
 
@@ -172,12 +165,7 @@ App = {
     });
   },
 
-  handlePay : function(requestId, rating){
-    // If rating is not valid
-    if (rating > 100 || rating < 0){
-      alert("Please enter a valid rating.");
-      return false;
-    }
+  handlePay : function(requestId){
 
     id = App.contracts.SilkCode.methods.payContract(requestId).send({from:App.handler})
     .then((x) => {
@@ -196,7 +184,7 @@ App = {
 
   // creator is the address of the creator who's request is being accepted,
   // along with the requestId.
-  handleAccept : function(creator, requestId){
+  handleAccept : function(requestId){
     App.contracts.SilkCode.methods.acceptRequest(requestId).send({from:App.handler})
     .then((x) => {
       console.log(x)
