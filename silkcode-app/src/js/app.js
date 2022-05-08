@@ -199,7 +199,7 @@ App = {
       return false;
     }
 
-    App.contracts.SilkCode.methods.ownerAirDrop(airDropAddress, airDropAmount).send({from:App.handler})
+    App.contracts.SilkCode.methods.ownerAirdrop(airDropAddress, airDropAmount).send({from:App.handler})
     .then((x) => {
       console.log(x)
     });
