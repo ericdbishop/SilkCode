@@ -47,12 +47,13 @@ App = {
   },  
 
   bindEvents: function() {  
+    App.populateAddress().then(r => App.handler = r[0]);
     $(document).on('click', '#eth', function(){
        App.handleAccount();
     });
     $(document).on('click', '#getTokenBalance', function(){
       App.populateAddress().then(r => App.handler = r[0]);
-      App.getTokenBalance()
+      App.getTokenBalance();
     })
     $(document).on('click', '#updateRequests', function(){
       App.handleUpdate();
@@ -97,11 +98,17 @@ App = {
     return await reqAcc_Connect();
   },  
 
-  getTokenBalance : function(address){
+  getTokenBalance : function(){
     // App.handler=App.web3.givenProvider.selectedAddress;
+    //alert("TEST");
     //return await ethereum.request({method : 'eth_requestAccounts'});
-    return await  App.contracts.SilkCode.methods.getTokenBalance()
-  },  
+    bal = App.contracts.SilkCode.methods.getBalance().call({from:App.handler})
+    .then((x) => {
+      console.log(x);
+      //console.log(x.returnValues)
+      var balanceString = String(x) + " Silk"
+      document.getElementById("tokenBal").innerHTML = balanceString;
+    })},  
 
   handleUpdate : function(){
     $.get('/update').then((response) => {
